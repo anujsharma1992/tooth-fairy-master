@@ -1,0 +1,14 @@
+.vendorFormCss {
+    padding: 1px 10px;
+    margin: 10px 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.posbtn{
+	position: absolute;
+	top: 10px;
+	right: 30px;
+	z-index: 1;
+}

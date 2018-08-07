@@ -1,0 +1,13 @@
+.search-by-id {
+	position: absolute;
+    left: 175px;
+    z-index: 99;
+}
+.booking-search {
+	margin-bottom: 4px;
+    padding: 6px 20px;
+    margin-left: 10px;
+}
+agm-map {
+  height: 300px;
+}

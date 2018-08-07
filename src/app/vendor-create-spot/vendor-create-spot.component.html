@@ -1,0 +1,120 @@
+<title>{{title}}</title>
+<app-common-nav></app-common-nav>
+<div class="loginWrapper">
+    <div *ngIf="loader" class="loaderCntr" style="display: block;">
+        <div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+    </div>
+    <div class="logincontainer">
+        <div class="row pad">
+            <a routerLink="create-spot" class="btn btn-primary" routerLink="/spots" style="float:right;">Back</a>
+            <div class="col-md-4 col-md-offset-4"> <span class="error" style="text-align: center;display: block;"></span>
+
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading login" style="text-align: center;">
+                        <h3 class="panel-title">Create a Spot</h3>
+
+                    </div>
+                    <div class="panel-body">
+                        <div *ngIf="addFormError" class="alert alert-danger box-msg" role="alert" >
+                        </div>
+                        <div *ngIf="sucMsgVal" class="spotFormCss alert-success" [innerHTML]="sucMsg">
+                        </div>
+                        <form enctype="multipart/form-data" method="post" (ngSubmit)="createSpot()" #spotForm="ngForm" name="spotForm" novalidate>
+                            <fieldset>
+                                <div class="form-group">
+                                    <label>Spot Images</label>
+                                    <input type="file" required multiple="multiple" id="file" placeholder="Upload file" accept=".png,.gif,.jpeg,.jpg" >
+                                </div>
+
+                            	<div class="form-group">
+                                    <input pattern=".*\S.*" required title="This field is required" [(ngModel)]="spot.name" class="form-control" placeholder="Spot Name" type="text" name="spot_name" #spot_name="ngModel">
+                                    <div [hidden]="spot_name.valid || spot_name.pristine" class="spotFormCss alert-danger">
+                                        Please enter spot name or title
+                                    </div>
+                                </div>
+
+                               	<div class="form-group">
+                                    <textarea pattern=".*\S.*" required title="This field is required" [(ngModel)]="spot.desc" class="form-control" placeholder="Description" type="text" name="desc" #desc="ngModel"> </textarea>
+                                    <div [hidden]="desc.valid || desc.pristine" class="spotFormCss alert-danger">
+                                         Please tell us something about you or your business
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                	<select [(ngModel)]="spot.category_id" class="form-control" required name="category_id" #category_id="ngModel"> 
+                                		<option value="" selected>Select Category</option>
+                                		<option *ngFor="let cat of cats" [ngValue]="cat._id">{{cat.cat_name}}</option>
+                                	</select>
+                                    <div [hidden]="category_id.valid || category_id.pristine" class="spotFormCss alert-danger">
+                                         Please select category
+                                    </div>
+                                </div>
+
+                               <!--  <div class="form-group">
+                                	<select [(ngModel)]="spot.event_type" class="form-control" required name="event_type" #event_type="ngModel"> 
+                                		<option value="" selected>Select Event Type</option>
+                                		<option value="0">One Day Event</option>
+                                		<option value="1">Long Event</option>
+                                	</select>
+                                    <div [hidden]="event_type.valid || event_type.pristine" class="spotFormCss alert-danger">
+                                         Please select event type
+                                    </div>
+                                </div> -->
+                                
+                                <div class="form-group">
+                                    <input readonly pattern=".*\S.*" title="This field is required" [(ngModel)]="spot.event_start" class="form-control pointer datepicker start_date" placeholder="From Date" type="text" name="event_start" #event_start="ngModel">
+                                    <div [hidden]="event_start.valid || event_start.pristine" class="spotFormCss alert-danger">
+                                        Please select event start date from calendar
+                                    </div>
+                                </div>                    
+
+                                <div class="form-group">
+                                    <input readonly pattern=".*\S.*" title="This field is required" [(ngModel)]="spot.event_end"  class="form-control pointer vdatepicker end_date" placeholder="To Date" type="text" name="event_end" #event_end="ngModel">
+                                    <div [hidden]="event_end.valid || event_end.pristine" class="spotFormCss alert-danger">
+                                        Please select event end date from calendar
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <input readonly pattern=".*\S.*" title="This field is required" [(ngModel)]="spot.from_hours"  class="form-control pointer timepicker from_hours" placeholder="Opening Time" type="text" name="from_hours" #from_hours="ngModel">
+                                    <div [hidden]="from_hours.valid || from_hours.pristine" class="spotFormCss alert-danger">
+                                        Please select event end date from calendar
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <input readonly pattern=".*\S.*" title="This field is required" [(ngModel)]="spot.to_hours"  class="form-control pointer timepicker to_hours" placeholder="Closing Time" type="text" name="to_hours" #to_hours="ngModel">
+                                    <div [hidden]="to_hours.valid || to_hours.pristine" class="spotFormCss alert-danger">
+                                        Please select event end date from calendar
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group pos"><span class="fa fa-dollar"></span>
+                                    <input pattern= "[0-9]+" required title="This field is required" [(ngModel)]="spot.price" class="form-control" placeholder="Joining Fee" type="text" name="price" #price="ngModel">
+                                    <div [hidden]="price.valid || price.pristine" class="spotFormCss alert-danger">
+                                        Please enter valid spot joining fees
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input pattern=".*\S.*" required title="This field is required" [(ngModel)]="spot.venue" class="form-control venue"  googleplace placeholder="Venue" type="text" name="venue" #venue="ngModel">
+                                    <div [hidden]="venue.valid || venue.pristine" class="spotFormCss alert-danger">
+                                        Please enter venue
+                                    </div>
+                                </div>
+
+								<span style="text-align: center;color: #a94442">{{errorMsg}}</span>
+                                <!-- <div class="forget-password login"> <a style="cursor:pointer" ng-click="init()" data-toggle="modal" data-target="#myModal">Forgot password ?</a> </div> -->
+                                <!-- Change this to a button or input when using this as a form -->
+                                <!-- <a type="submit" (click)="login()" class="btn btn-lg btn-success login btn-block">Login</a> -->
+                                <button type="submit" class="btn btn-lg btn-success btn-block" [disabled]="!spotForm.form.valid">Update</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

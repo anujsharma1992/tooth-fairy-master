@@ -1,0 +1,96 @@
+<title>{{title}}</title>
+<app-admin-common-nav></app-admin-common-nav>
+<div id="page-wrapper">
+    <div *ngIf="loader" class="loaderCntr" style="display: block;">
+        <div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+    </div>
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Dentist Detail
+                    <a style="float:right;" class="btn btn-primary" type="button" routerLink="/admin/dentist">Back</a>
+                </h3>
+                <div class="dashboardContent profile clearfix">
+					<img style="width: 200px;" [(src)]='baseImagePath+spotData.photo_url'/>
+                    <div class="col-md-6">
+                        <div class="dividebor clearfix">
+                            <h4>UID: </h4>
+                            <p>{{spotData.uid}}</p>
+                        </div>
+						<div class="dividebor clearfix">
+                            <h4>Reg Number: </h4>
+                            <p>{{spotData.regNumber != '' ? spotData.regNumber : 'N/A'}}</p>
+                        </div>
+						<div class="dividebor clearfix">
+                            <h4>Email: </h4>
+                            <p>{{spotData.email != '' ? spotData.email : ''}}</p>
+                        </div>
+						<div class="dividebor clearfix">
+                            <h4>Email Verified: </h4>
+                            <p>{{spotData.emailVerified? "Yes" : "No"}}</p>
+                        </div>
+						<div class="dividebor clearfix">
+                            <h4>First Name: </h4>
+                            <p>{{spotData.firstName != '' ?  spotData.title +' '+ spotData.firstName : 'N/A' }}</p>
+                        </div>
+						<div class="dividebor clearfix">
+                            <h4>Last Name: </h4>
+                            <p>{{spotData.lastName}}</p>
+                        </div>
+						<div class="dividebor clearfix">
+                            <h4>Gender: </h4>
+                            <p>{{spotData.gender=='m'?'male':(spotData.gender=='f'?'female':'other')}}</p>
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>User Type: </h4>
+                            <p>{{spotData.userType}}</p>
+                        </div>
+						<div class="dividebor clearfix">
+                            <h4>Date Of Birth: </h4>
+                            <p>{{spotData.dateOfBirth != '' ? spotData.dateOfBirth : 'N/A'}}</p>
+                        </div>
+                        
+                        <div class="dividebor clearfix">
+                            <h4>Last Access: </h4>
+                            <p>{{spotData.last_access | date:'short'}}</p>
+                        </div>
+                        
+						<div class="dividebor clearfix">
+                            <h4>Active: </h4>
+                            <p>{{spotData.active?'Yes' : 'No'}}</p>
+                        </div>
+						<div class="dividebor clearfix">
+                            <h4>Verified: </h4>
+                            <p>{{spotData.verify?'Yes' : 'No'}}</p>
+                        </div>
+                        <!-- <div class="dividebor clearfix"> -->
+                            <!-- <h4>To Date: </h4> -->
+                            <!-- <p>{{spotData.event_end != '' ? (spotData.event_end | date:'yMd') : 'N/A'}}</p> -->
+                        <!-- </div> -->
+                        <!-- <div *ngIf="spotData.from_hours && spotData.to_hours" class="dividebor clearfix"> -->
+                            <!-- <h4>Operating Hours: </h4>  -->
+                            <!-- <p>{{spotData.from_hours + ' - ' + spotData.to_hours}}</p> -->
+                        <!-- </div> -->
+                        <!-- <div class="dividebor clearfix"> -->
+                            <!-- <h4>Venue: </h4> -->
+                            <!-- <p>{{spotData.venue != '' ? spotData.venue : 'N/A'}}</p> -->
+                        <!-- </div> -->
+                    </div>
+                    <!-- <div class="col-md-6" > -->
+                        <!-- <label  *ngIf="spotData.images.length > 0 ? true : false" >Spot Images: </label> -->
+                        <!-- <div class="row cleqarfix"> -->
+                            <!-- <div class="col-sm-4" *ngFor="let image of spotData.images"> -->
+                                <!-- <div class="btmar"> -->
+                                    <!-- <a target="_blank" href="{{ ROOT_PATH+'/spots/'+image}}"> -->
+                                        <!-- <img class="img-responsive" src="{{ ROOT_PATH+'/spots/'+image}}" alt="" /> -->
+                                    <!-- </a> -->
+                                <!-- </div> -->
+                            <!-- </div> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

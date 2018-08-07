@@ -1,0 +1,47 @@
+<title>{{title}}</title>
+<app-common-nav></app-common-nav>
+<div id="page-wrapper">
+	<div *ngIf="loader" class="loaderCntr" style="display: block;">
+		<div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+	</div>
+	<div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">
+	               All Spots
+	               <a routerLink="create-spot" class="btn btn-primary" style="float:right;">Create Spot</a>
+	            </h3>
+	        </div>
+        </div>
+        <!-- row -->
+        <div class="dashboardContent clearfix">
+		    <div class="table-responsive custom">
+		        <div *ngIf="success" class="alert alert-success box-msg" role="alert" [innerHTML]="sucMsgVal">
+				</div>
+		        <div *ngIf="error" class="alert alert-danger box-msg" role="alert" [innerHTML]="errMsgVal">
+				</div>
+				<table id="userdata" class="border table-striped table userdata">
+		            <thead>
+		                <tr>
+		                	<th>Name</th>
+		                	<th>Price</th>
+		                    <th>Added On</th>
+		                    <th>Action</th>
+						</tr>
+		            </thead>
+		            <tbody>
+		                <tr *ngFor="let spot of spots;let i = index">
+		                	<td>{{spot.name}}</td>
+		                	<td>{{spot.price}}</td>
+						    <td>{{spot.timestamp | date:'short'}}</td>
+						    <td><a (click)="delete(spot._id,i)" title="Delete" href="javascript:;"><i class="fa fa-trash" aria-hidden="true"></i></a> | <a [routerLink]="['details', spot._id]" title="View Details" href="javascript:;"><i class="fa fa-eye" aria-hidden="true"></i></a> | <a [routerLink]="['edit',spot._id]" title="Edit Spot" href="javascript:;"><i class="fa fa-edit" aria-hidden="true"></i></a> 
+						    </td>
+						</tr>
+		            </tbody>
+		        </table>
+		    </div>
+		</div>
+    </div>
+    <!-- container-fluid -->
+</div>

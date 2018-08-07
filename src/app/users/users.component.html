@@ -1,0 +1,95 @@
+<title>ToothFairy:Users</title>
+<app-admin-common-nav></app-admin-common-nav>
+<div id="page-wrapper">
+	<div *ngIf="loader" class="loaderCntr" style="display: block;">
+		<div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+	</div>
+	<div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">
+	               All Business Owners
+	               <a [routerLink]="['add']" class="btn btn-primary" style="float:right;">Add Business Owner</a>
+	            </h3>
+	          <h3 *ngIf="isShowttl">{{totalUsers > 0 ? 'Total Users: '+totalUsers : ''}}</h3>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="dashboardContent clearfix">
+		    <div class="table-responsive custom">
+		        <div *ngIf="success" class="alert alert-success box-msg" role="alert" [innerHTML]="sucMsgVal">
+				</div>
+		        <div *ngIf="error" class="alert alert-danger box-msg" role="alert" [innerHTML]="errMsgVal">
+				</div>
+				<table id="userdata" class="border table-striped table userdata">
+		            <thead>
+		                <tr>
+		                	<th>Name</th>
+		                	<th>Email</th>
+		                    <th>Phone</th>
+		                    <th>Business Name</th>
+		                    <th>Address</th>
+		                    <th>Registration</th>
+		                    <th>Action</th>
+						</tr>
+		            </thead>
+		            <tbody>
+		                <tr *ngFor="let user of users;let i = index">
+		                	<td>{{user.full_name}}</td>
+		                	<td>{{user.email}}</td>
+						    <td>{{user.phone}}</td>
+						    <td>{{user.business_name}}</td>
+						    <td>{{user.address}}</td>
+						    <td>{{user.timestamp | date:'short'}}</td>
+						    <td><a (click)="delete(user._id,i)" title="Delete" href="javascript:;"><i class="fa fa-trash" aria-hidden="true"></i></a> | <a (click)="updateUserStatus(user._id,user.is_approve,i)" title="update status" href="javascript:;">  <i class="" aria-hidden="true"></i> {{ user.is_approve == 1 ? 'De-Activate' : 'Activate'}} </a> | <a [routerLink]="['edit',user._id]" title="View Details" href="javascript:;"><i class="fa fa-edit" aria-hidden="true"></i></a>
+						    </td>
+						</tr>
+		            </tbody>
+		        </table>
+		    </div>
+		</div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-middle">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add User</h4>
+                    </div>
+                    <div class="modal-body">
+		                 <div *ngIf="addFormError" class="alert alert-danger box-msg" role="alert" [innerHTML]="addErrMsgVal">
+		                </div>
+                        <form action="/" #userForm="ngForm" name="userForm" novalidate>
+                            <fieldset>
+                                <div class="form-group">
+                                    <input [(ngModel)]="user.username" name="username" class="form-control" placeholder="User Name" type="text" required #username="ngModel">
+                                    <div [hidden]="username.valid || username.pristine" class="alert alert-danger">
+					                	Username is required
+					                </div>
+                                </div>
+                                <div class="form-group">
+                                    <input [(ngModel)]="user.email" name="email" class="form-control" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" placeholder="Email" type="email" required #email="ngModel">
+                                    <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+					                	Please enter a valid email address
+					                </div>
+                                </div>
+                                <div class="form-group">
+                                    <input [(ngModel)]="user.password" name="password" class="form-control" minlength="6" placeholder="Password" type="password"  required #password="ngModel">
+                                    <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+					                	Password is required, it should be 6 characters long
+					                </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer" style="text-align: center;">
+                        <button type="submit" (click)="onSubmit(userForm.value)" class="btn btn-success" [disabled]="!userForm.form.valid">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- container-fluid -->
+</div>

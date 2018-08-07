@@ -1,0 +1,262 @@
+<title>{{title}}
+</title>
+<app-admin-common-nav></app-admin-common-nav>
+<router-outlet></router-outlet>
+<div class="container-fluid">
+<div *ngIf="loader" class="loaderCntr" style="display: block;">
+	<div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+</div>
+<!-- <div *ngIf="!isVerifyVal" class="mess alert alert-warning" [innerHTML]="isVerifiedMsg" > -->
+<!-- </div> -->
+<!-- <div *ngIf="!isVerifyVal" class="stripe-button-el"> -->
+	<!-- <span (click)="openCheckout()"> Pay now </span> -->
+<!-- </div> -->
+<!--  -->
+ <div  *ngIf="nearByClinics" class="content-wrapper video-wrapper car-detail-wrapper clearfix">
+    <section class="content clearfix">
+     <div class="video-wrapper-content clearfix">
+     <div class="col-md-12">
+	    <div class="col-md-12 text-center">
+		   <h1>View Appointment</h1>
+		</div>
+<div class="col-md-8">
+		   <h2>Car Details</h2>
+		   <div class="clearfix"></div>
+		   <div class="border-heading"></div>
+		   <div class="car-detail">
+		    <div class="Car-detail-inner-gap">
+				<div class="Car-detail-div">
+				     <h6>Booking ID</h6>
+					  <p>TF {{booking_id<0?'0'+booking_id:booking_id}}</p>
+				</div>
+				<div class="border-heading"></div>
+				<div class="Car-detail-div">
+				     <h6>Call Duration</h6>
+					 <p>{{nearByClinics.call_duration}} mins</p>
+				</div>
+				<div class="border-heading"></div>
+				<div class="Car-detail-div">
+				     <h6>Call Date & Time</h6>
+					  <!-- <p>Tuesday 25, Aug 2017 22:33:00 </p> -->
+					  <p *ngIf='nearByClinics'>{{nearByClinics.booking_time | date:'fullDate'}} {{nearByClinics.booking_time | date:'HH:mm:ss':'+0000'}}</p>
+				</div>
+				<div class="border-heading"></div>
+				<div class="Car-detail-div">
+				     <h6>Call Rating</h6>
+					<p>
+					  <span class="fa fa-star" [ngClass]="nearByClinics.rating>=1?'checked':''"></span>
+					  <span class="fa fa-star" [ngClass]="nearByClinics.rating>=2?'checked':''"></span>
+					  <span class="fa fa-star" [ngClass]="nearByClinics.rating>=3?'checked':''"></span>
+					  <span class="fa fa-star" [ngClass]="nearByClinics.rating>=4?'checked':''"></span>
+					  <span class="fa fa-star" [ngClass]="nearByClinics.rating>=5?'checked':''"></span>   {{nearByClinics.rating}}/5
+					</p>
+					  
+					<div class="flag-div text-right">
+					  <!-- <h5>You have raised <i class="fa fa-flag" aria-hidden="true"></i></h5> -->
+					</div>
+				</div>
+			</div>
+		   </div>
+		</div>
+		<div class="col-md-4 video-section">
+		   <h2 class="pull-left">Checklist</h2>
+		   <div class="tick-icon pull-right">
+		   <img src="../assets/image/tick.png" width="22" height="16"/>
+		   </div>
+		   <div class="clearfix"></div>
+		   <div class="border-heading"></div>
+		   <div class="checklist-div jspScrollable scroll-pane">
+		   <div class="checklist-div-inner-gap">
+		      <div *ngFor="let listitem of doctorCheckList; let i = index;" class="checklist-box">
+				   <span><input type="checkbox" class="tt-input" [attr.checklistid]='listitem.id' [id]="'first'+i" value="on">
+                   <label [attr.for]="'first'+i"><h5>{{listitem.heading}} </h5>
+					<p>{{listitem.description}}</p></label></span>
+			  </div>
+		   </div>
+		   </div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="col-md-4 video-section">
+			<h2>Patient’s Detail</h2>
+			<div class="clearfix"></div>
+			<div class="border-heading"></div>
+			<div class="Patient-Detail jspScrollable scroll-pane clearfix">
+			<div *ngIf='getPatientDetailsObj' class="Patient-Detail-inner-gap">
+			    <div class="user-div">
+					<div  class="user-img">
+					  <img src="{{getPatientDetailsObj.photo_url?baseImagePath+getPatientDetailsObj.photo_url:'assets/image/user8-128x128.jpg'}}"  width="60" height="60" class="img-circle"/>
+					</div>
+					<div class="user-name">
+					  <h6>{{getPatientDetailsObj.nameTitle+" "+getPatientDetailsObj.firstName+" "+getPatientDetailsObj.lastName}}</h6>
+					  <p>{{getPatientDetailsObj.address}}</p>
+					</div>
+				</div>
+				<div class="border-heading"></div>
+				<div class="user-div">
+				     <h6>Date of Birth</h6>
+					  <p>{{getPatientDetailsObj.dateOfBirth}}</p>
+				</div>
+				<div class="border-heading"></div>
+				<div class="user-div">
+				     <h6>Sex</h6>
+					  <p>{{getPatientDetailsObj.gender=='m'?'male':'female'}}</p>
+				</div>
+				<div class="border-heading"></div>
+				<div class="user-div">
+				     <h6>Email</h6>
+					  <p>{{getPatientDetailsObj.email}}</p>
+				</div>
+				<div class="border-heading"></div>
+			</div>
+			</div>
+		</div>
+		<div class="col-md-4 video-section">
+		    <h2>Patient’s History</h2>
+			<div class="clearfix"></div>
+			<div class="border-heading"></div>
+		    <div class="Patient-History jspScrollable scroll-pane clearfix">
+				<div class="Patient-History-inner-gap clearfix">
+                   <div *ngFor="let itemx of getPatientMedicalHistoryObj; let i=index;" class="Patient-History-div">
+				       <h6>{{itemx.question}}</h6>
+					   <div class="col-md-6 btn-gap">
+					      <button type="button" class="btn btn-info btn-block" [ngClass]= "itemx.answer=='Yes'?'active':''"> 
+						   <div class="icon-h">
+						     <i class="fa fa-check" aria-hidden="true"></i>
+						   </div>Yes</button>
+					   </div>
+					   <div class="col-md-6 btn-gap">
+					      <button type="button" [ngClass]= "itemx.answer=='No'?'active':''" class="btn btn-info btn-block">
+                           <div class="icon-h">
+						     <i class="fa fa-times" aria-hidden="true"></i>
+						   </div>No</button>
+					   </div>
+                        <div *ngIf='itemx.desc!="No"' class="col-md-12 no-padding">					    
+						<p>{{itemx.desc}}</p>
+						</div>
+				   </div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 video-section">
+		   <h2>Complaint form</h2>
+			<div class="clearfix"></div>
+			<div class="border-heading"></div>
+	        <div class="Complaint-form jspScrollable scroll-pane clearfix">
+			<div *ngIf='getBookingDetailsObj' class="Complaint-form-inner-gap">
+				<div *ngFor="let itemy of complaint_form;let i = index" class="Complaint-form-div">
+				     <h6>{{itemy.ques}}</h6>
+					  <p>{{itemy.answer}}</p>
+				</div>
+			</div>
+			</div>		
+		</div>
+		<div class="col-md-8 video-section">
+		   <h2>Doctor Notes</h2>
+			<div class="clearfix"></div>
+			<div class="border-heading"></div>
+	        <div class="Doctor-Notes clearfix">
+			<div class="Doctor-Notes-inner-gap">
+                <div class="form-group">
+				   <textarea name="your-message" [(ngModel)]="notes_text" class="form-control" rows="3" aria-invalid="false" placeholder="write something here" required="" data-gramm="true" data-txt_gramm_id="013ca056-1497-1939-266c-157af4d0ddde" data-gramm_id="013ca056-1497-1939-266c-157af4d0ddde" spellcheck="false" data-gramm_editor="true"></textarea>
+				</div>
+				<div class="notes-div">
+				   <ul *ngIf='notesList' class="list-unstyled">        
+					   <li *ngFor="let itemx of notesList;">
+					   {{itemx.notes}}
+					   </li>
+					</ul>
+				</div>
+			</div>
+			</div>	
+            <div class="col-md-12 text-right no-padding doctor-btn">
+              <!-- <button type="button" (click)="insertNotes(booking_id)" class="btn btn-default">Save</button> -->
+			</div>			
+		</div>
+		<div class="col-md-4 video-section">
+		   <h2>Patient's Notes</h2>
+			<div class="clearfix"></div>
+			<div class="border-heading"></div>
+	        <div class="Patient-Attachments clearfix">
+			<div *ngIf='getBookingDetailsObj' class="tz-gallery">
+				<div *ngIf="getBookingDetailsObj[0].img1" class="col-md-4 gallery-gap">
+				   <div class="gallery-img">
+					   <a class="lightbox" [href]="baseImagePath+getBookingDetailsObj[0].img1">
+						<img class="img-responsive" [src]="baseImagePath+getBookingDetailsObj[0].img1"> 
+						<div class="zoom">
+						<img src="assets/image/zoom.png" width="25" height="25" />
+						</div>
+					   </a>
+				   </div>
+				</div> 
+				<div *ngIf="getBookingDetailsObj[0].img2" class="col-md-4 gallery-gap">
+				   <div class="gallery-img">
+				   <a class="lightbox" [href]="baseImagePath+getBookingDetailsObj[0].img2">
+					<img class="img-responsive" [src]="baseImagePath+getBookingDetailsObj[0].img2">
+					<div class="zoom">
+					<img src="assets/image/zoom.png" width="25" height="25" />
+					</div>
+				   </a>
+				   </div>
+				</div>
+				<div *ngIf="getBookingDetailsObj[0].img3" class="col-md-4 gallery-gap">
+				   <div class="gallery-img">
+				   <a class="lightbox" [href]="baseImagePath+getBookingDetailsObj[0].img3">
+					<img class="img-responsive" [src]="baseImagePath+getBookingDetailsObj[0].img3">
+					<div class="zoom">
+					<img src="assets/image/zoom.png" width="25" height="25" />
+					</div>
+				   </a>
+				   </div>
+				</div> 
+			</div>
+			</div>		
+		</div>
+		<div class="clearfix"></div>
+		<div>
+			<div class="col-md-8 video-section">
+			  <h2>Patient’s Notes</h2>
+			  <div class="clearfix"></div>
+			  <div class="border-heading"></div>
+			 <div class="Patient-Notes clearfix">
+			   <div class="form-group">
+					<textarea [(ngModel)]='nearByClinics.notes' disabled name="your-message" class="form-control" rows="5" aria-invalid="false" placeholder="write your comments..." required="" data-gramm="true" data-txt_gramm_id="013ca056-1497-1939-266c-157af4d0ddde" data-gramm_id="013ca056-1497-1939-266c-157af4d0ddde" spellcheck="false" data-gramm_editor="true"></textarea>
+			   </div>
+			 </div>
+			</div>
+			<div class="col-md-4 video-section">
+			   <h2>Patient's Prescription</h2>
+			   <div class="clearfix"></div>
+			   <div class="border-heading"></div>
+			   <div class="Patient-Prescription clearfix">
+				   <div class="Patient-Prescription-inner-gap clearfix">
+				   <div class='patient'>
+					<div class="col-md-6 Prescription-padding">
+                       <p>Prescription</p>
+                    </div>
+                    <div class="col-md-2 Prescription-padding">
+					  <p>Quantity</p> 
+					</div>
+					</div>
+					<div *ngIf="nearByClinics.prescription_arr">
+					<div *ngFor="let item of nearByClinics.prescription_arr.split(',');let x=index;" class='patient'>
+					<div class="col-md-6 Prescription-padding">
+                       <div class="form-group">  
+                      <input disabled [value]="item.split('|')[0]" class="form-control dynoprescription"/>
+                       </div>
+                    </div>
+                    <div class="col-md-4 Prescription-padding">
+                      <div class="form-group">
+                      <input disabled [value]="item.split('|')[1]"  class="form-control quantity"/>                    
+					  </div>
+					</div>
+					</div>
+					</div>
+				   </div>
+			   </div>
+			</div>
+		</div>
+	 </div>
+	 </div>
+    </section>
+  </div>
+</div>

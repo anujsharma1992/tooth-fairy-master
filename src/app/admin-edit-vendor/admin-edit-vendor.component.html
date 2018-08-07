@@ -1,0 +1,76 @@
+<title>{{title}}</title>
+<app-admin-common-nav></app-admin-common-nav>
+<div class="loginWrapper">
+    <div *ngIf="loader" class="loaderCntr" style="display: block;">
+        <div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+    </div>
+    <div class="logincontainer">
+        <div class="row pad">
+             <a class="btn btn-primary posbtn" routerLink="/admin/users" style="float:right;">Back</a>
+            <div class="col-md-4 col-md-offset-4"> <span class="error" style="text-align: center;display: block;"></span>
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading login" style="text-align: center;">
+                        <h3 class="panel-title">Update Business Owner Details</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div *ngIf="addFormError" class="alert alert-danger box-msg" role="alert" >
+                        </div>
+                        <div *ngIf="sucMsgVal" class="vendorFormCss alert-success" [innerHTML]="sucMsg">
+                        </div>
+                        <form enctype="multipart/form-data" method="post" (ngSubmit)="updateVendorProfile()" #vendorForm="ngForm" name="vendorForm" novalidate>
+                            <fieldset>
+                                <div class="form-group">
+                                    <label>Profile Pic</label>
+                                    <input type="file" id="file" placeholder="Upload file" accept=".png,.gif,.jpeg,.jpg">
+                                </div>
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input  pattern=".*\S.*" required title="This field is required" [(ngModel)]="vendor.full_name" class="form-control" placeholder="Full Name" type="text" name="full_name" #full_name="ngModel">
+                                    <div [hidden]="full_name.valid || full_name.pristine" class="vendorFormCss alert-danger">
+                                        Username is required
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input [(ngModel)]="vendor.phone" class="form-control login" placeholder="Phone No"  type="text" name="phone" pattern="[1-9]{1}[0-9]{9}"  required  #phone="ngModel">
+                                    <div [hidden]="phone.valid || phone.pristine" class="vendorFormCss alert-danger">
+                                        Please enter valid phone number
+                                    </div>
+                                </div>
+                            	<div class="form-group">
+                                    <label>Business Name</label>
+                                    <input pattern=".*\S.*" required title="This field is required" [(ngModel)]="vendor.business_name" class="form-control" placeholder="Business Name" type="text" name="business_name" #business_name="ngModel">
+                                    <div [hidden]="business_name.valid || business_name.pristine" class="vendorFormCss alert-danger">
+                                        Please enter business name
+                                    </div>
+                                </div>
+
+                               	<div class="form-group">
+                                    <label>About your business</label>
+                                    <textarea pattern=".*\S.*" required title="This field is required" [(ngModel)]="vendor.about_me" class="form-control" placeholder="About your company" type="text" name="about_me" #about_me="ngModel"> </textarea>
+                                    <div [hidden]="about_me.valid || about_me.pristine" class="vendorFormCss alert-danger">
+                                         Please tell us something about you or your business
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input  pattern=".*\S.*" required title="This field is required" [(ngModel)]="vendor.address" class="form-control" placeholder="Address" type="text" name="address" #address="ngModel">
+                                    <div [hidden]="address.valid || address.pristine" class="vendorFormCss alert-danger">
+                                         Please enter address
+                                    </div>
+                                </div>
+
+                                <span style="text-align: center;color: #a94442">{{errorMsg}}</span>
+                                <!-- <div class="forget-password login"> <a style="cursor:pointer" ng-click="init()" data-toggle="modal" data-target="#myModal">Forgot password ?</a> </div> -->
+                                <!-- Change this to a button or input when using this as a form -->
+                                <!-- <a type="submit" (click)="login()" class="btn btn-lg btn-success login btn-block">Login</a> -->
+                                <button type="submit" class="btn btn-lg btn-success btn-block" [disabled]="!vendorForm.form.valid">Update</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

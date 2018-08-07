@@ -1,0 +1,76 @@
+<title>{{title}}</title>
+<app-admin-common-nav></app-admin-common-nav>
+
+	<div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">
+	               Bookings
+	            </h3>
+	        </div>
+        </div>
+		<a routerLink="upload" class="btn btn-primary" style="float:right;">Upload Video</a> 
+        <!-- row -->
+				<div *ngIf="success" class="alert alert-success box-msg" role="alert" [innerHTML]="sucMsgVal">
+				</div>
+		        <div *ngIf="error" class="alert alert-danger box-msg" role="alert" [innerHTML]="errMsgVal">
+				</div>
+				<!-- <div class="search-by-id"> -->
+				    <!-- Search By Id: -->
+					<!-- <input type="text" (keyup.enter)="search(searchId.value)" placeholder="Please enter booking id" #searchId /> -->
+					<!-- <button class="btn btn-primary booking-search" (click)="search(searchId.value)">Search</button> -->
+				<!-- </div> -->
+				<!-- <div  > -->
+					
+					<!-- <div class='videoDescription'>{{item.description}} price {{item.price}}</div> -->
+				<!-- </div> -->
+				<div class="content-wrapper video-gallery-wrapper">
+					<section class="content">
+						<div class="video-gallery-div clearfix">
+						  <div class="col-md-9">
+							 <h2>Previous Appoinment</h2>  
+						  </div>
+						  <!-- <div class="col-md-3 search text-right"> -->
+							<!-- <form action="#" method="get"> -->
+								<!-- <div class="icon-addon addon-lg"> -->
+									<!-- <input type="text" placeholder="Search video" class="form-control" id="search"> -->
+								   <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+								<!-- </div> -->
+							  <!-- </form> -->
+						  <!-- </div> -->
+						  <div class="clearfix"></div>
+						  <div class="col-md-12">
+						  <div class="border-heading"></div>
+						  </div>
+						  <div *ngFor="let item of videos;let i = index" class="col-md-4">
+							 <div class="video-box clearfix">
+								<div class="col-md-12 no-padding">
+								<div class="video-img">
+									<video width="300"  controls poster='../assets/image/460.jpg'>
+									  <source [src]="basePathimage+item.url" type="video/mp4">
+									  <source [src]="basePathimage+item.url" type="video/ogg">
+									  Your browser does not support HTML5 video.
+									</video>
+								</div>
+								</div>
+								<div class="col-md-12 no-padding video-gallery-text">
+								 <h4>{{item.title}}</h4>
+								 <p>{{item.description}}</p>
+								</div>
+								<div class="col-md-6 links no-padding">
+								  <a href="#">View more</a>
+								</div>
+								<div class="col-md-6 no-padding text-right">
+								  <div class="links-icon clearfix">
+										 <a  class="right-line"  (click)='myFunction(i)' > <i class="fa fa-file-text-o" aria-hidden="true"></i></a> 
+										 <a > <i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
+								  </div>
+								</div>
+							  </div>
+						  </div>
+						</div>
+					</section>
+					<!-- /.content -->
+				  </div>
+				</div>

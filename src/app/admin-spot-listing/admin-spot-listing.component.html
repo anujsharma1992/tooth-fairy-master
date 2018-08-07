@@ -1,0 +1,66 @@
+<title>{{title}}</title>
+<app-admin-common-nav></app-admin-common-nav>
+<div id="page-wrapper">
+	<div *ngIf="loader" class="loaderCntr" style="display: block;">
+		<div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+	</div>
+	<div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">
+	               All Dentist
+	               <a routerLink="create" class="btn btn-primary" style="float:right;">Create Dentist</a>
+	            </h3>
+	        </div>
+        </div>
+        <!-- row -->
+        <div class="dashboardContent clearfix">
+		    <div class="table-responsive custom">
+		        <div *ngIf="success" class="alert alert-success box-msg" role="alert" [innerHTML]="sucMsgVal">
+				</div>
+		        <div *ngIf="error" class="alert alert-danger box-msg" role="alert" [innerHTML]="errMsgVal">
+				</div>
+				<table id="userdata" class="border table-striped table userdata">
+		            <thead class="blue">
+		                <tr>
+		                	<th>Profile Image</th>
+		                	<th>Name</th>
+		                	<th>Email</th>
+		                	<th>gender</th>
+		                    <th>Documents Uploaded</th>
+		                    <th>Verified</th>
+		                    <th>Added On</th>
+		                    <th>Action</th>
+						</tr>
+		            </thead>
+		            <tbody>
+		                <tr *ngFor="let spot of spots;let i = index">
+		                	<td><img src="{{ spot.photo_url !='' ? basePathimage+spot.photo_url:'../assets/image/userlogo.png'}}" width="40px"/></td>
+		                	<td>{{spot.firstName}}</td>
+		                	<td>{{spot.email}}</td>
+		                	<td>{{spot.gender=='m'?'male':(spot.gender=='f'?'female':'other')}}</td>
+							<td>
+								<div class="verified-text">
+									<img src="../assets/image/verified.png"/>{{spot.doc_verified==null?'Not Uploaded':(spot.doc_verified==0?'Not Verfied':'Verified')}}
+								</div>
+							</td>
+						    <td>
+								<a *ngIf="spot.active" (click)="verifySpotStatus(spot.uid,spot.verify,i)" title="update Dentist status" href="javascript:;"> 
+									<i class="" aria-hidden="true"></i> {{ spot.doc_verified==null?'':(spot.verify == 1 ? 'Already Verified':'Verify Now') }}  
+						 		</a>
+							</td>
+						    <td>{{spot.signup | date:'short'}}</td>
+						    <td>
+						    	<a (click)="updateSpotStatus(spot.uid,spot.active,i)" title="update Dentist status" href="javascript:;"> 
+						     	<i class="" aria-hidden="true"></i> {{ spot.active == 1 ? 'De-Activate' : 'Activate'}}  
+						 		</a> | <a (click)="delete(spot.uid,i)" title="Delete" href="javascript:;"><i class="fa fa-trash" aria-hidden="true"></i></a> | <a [routerLink]="['details', spot.uid]" title="View Details" href="javascript:;"><i class="fa fa-eye" aria-hidden="true"></i></a> | <a [routerLink]="['edit',spot.uid]" title="Edit Spot" href="javascript:;"><i class="fa fa-edit" aria-hidden="true"></i></a>
+						 	</td>
+						</tr>
+		            </tbody>
+		        </table>
+		    </div>
+		</div>
+    </div>
+    <!-- container-fluid -->
+</div>

@@ -1,0 +1,48 @@
+<div class="headerlogo"></div>
+<div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            <!--<a class="navbar-brand" href="index.html">BrewExchange Vendor</a>-->
+            <div class="welcome">
+                <h4>Hello <span>admin</span>, Welcome back</h4>
+            </div>
+        </div>
+        <!-- Top Menu Items -->
+        <ul class="nav navbar-right top-nav">
+            <li class="dropdown">
+                <!-- <span class="profile-image"></span> --></li>
+            <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <!-- <li> <a ui-sref="profile"><i class="fa fa-fw fa-user" ></i> Profile</a> </li>
+                    <li ng-show="isShowPwdLink"> <a style="cursor:pointer" ng-click="reset()" data-toggle="modal" data-target="#myModalChangeP"><i class="fa fa-fw fa-lock"></i> Change Password</a> </li>
+                    <li>
+                      <a><i class="fa fa-fw fa-gear"></i> Settings</a>
+                    </li> -->
+                    <li class="divider"></li>
+                    <li> <a style="cursor: pointer" (click)="logout()"><i class="fa fa-fw fa-power-off"></i> Log Out</a> </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <div class="logoadmin"><a ui-sref="dashboard">logo</a></div>
+                <li>
+                    <a routerLink="/admin/dashboard" [routerLinkActive]="['active']"><i class="fa fa-tachometer"></i> Dashboard</a>
+                </li>
+                <!-- <li> <a routerLink="/admin/users" [routerLinkActive]="['active']"><i class="fa fa-fw dash"></i>Doctors</a> </li> -->
+                <li> <a routerLink="/admin/app-users" [routerLinkActive]="['active']"><i class="fa fa-book "></i> App Users</a></li>
+                <!-- <li> <a routerLink="/admin/dashboard" [routerLinkActive]="['active']"><i class="fa fa-fw dash"></i>Dentist</a></li> -->
+                <!-- <li> <a routerLink="/admin/dashshboard" [routerLinkActive]="['active']"><i class="fa fa-fw dash"></i>Bookings</a></li> -->
+                <li> <a routerLink="/admin/videogallery" [routerLinkActive]="['active']"><i class="fa fa-edit"></i>Video Gallery</a> </li>
+                <li> <a routerLink="/admin/bookings" [routerLinkActive]="['active']"><i class="fa fa-edit"></i> Bookings</a> </li>
+                <li> <a routerLink="/admin/dentist" [routerLinkActive]="['active']"><i class="fa fa-sitemap"></i> Dentist</a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+</div>

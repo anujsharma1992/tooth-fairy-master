@@ -1,0 +1,22 @@
+.spotFormCss {
+    padding: 1px 10px;
+    margin: 10px 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.pos {
+	position: relative;
+}
+.fa-dollar {
+	position: absolute;
+    top: 13px;
+    right: 10px;
+    color: #555;
+    font-size: 16px;
+}
+
+.pointer {
+    cursor: pointer;
+}

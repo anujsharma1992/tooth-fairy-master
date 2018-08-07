@@ -1,0 +1,63 @@
+<title>{{title}}</title>
+<div class="body-bg">
+   <div class="loginwrap">
+      <div class="loginbox">
+         <span class="error" style="text-align: center;display: block;"></span>
+         <div class="login">
+            <div *ngIf="loader" class="loaderCntr" style="display: block;">
+               <div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-centered no-padding clearfix">
+               <div class="col-md-12 col-sm-12 col-xs-12">
+                  <div class="col-md-12 text-center login-page">
+                     <div class="logo">
+                        <div class="login-logo-img">
+                           <img id="logoimg" src="assets/image/logo-chng.png" alt="">
+                        </div>
+                     </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="login-register-div">
+                     <div class="col-md-12 text-center">
+                        <h1>Forget Password</h1>
+                     </div>
+					 
+                     <div class="clearfix"></div>
+                     <form (ngSubmit)="login()" name="loginForm" novalidate>
+                        <fieldset>
+                           <div class="login-form clearfix">
+                              <div class="col-md-12">
+                                 <div class="form-group clearfix">
+                                    <label for="register-email">Email Address</label>
+                                    <input  [(ngModel)]="vendor.email"  type="text" name="email" class="form-control login email"  id="register-email" required placeholder="Johnathandoe@domain.com"/>
+                                 </div>
+								<div *ngIf="addFormError" class="alert alert-danger box-msg" role="alert" ></div>
+								<div *ngIf="sucMsgVal" class="vendorFormCss alert-success" [innerHTML]="sucMsg"></div>
+                              </div>
+                           </div>
+						    
+                           <div class="col-md-12">
+                              <div class="form-group btn-div text-center">
+                                 <button type="submit" class="btn btn-link"> Send Email </button>
+                              </div>
+                           </div>
+                        </fieldset>
+                     </form>
+                     <div class="col-md-12">
+                        <div class="Forgot-password text-center">
+                           <a href="#" routerLink="/login">Sign In ?</a>
+                        </div>
+                     </div>
+                     <div class="clearfix"></div>
+                     <div class="forgot-password-border">
+                     </div>
+                     <div class="signup-div text-center">
+                        Dont have an account yet ? <a href="#" routerLink="/signup">Sign up</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

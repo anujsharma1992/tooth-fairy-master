@@ -1,0 +1,109 @@
+<style>
+body {
+    background-color: #fff !important;
+    background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    margin-top: 0;
+}
+</style>
+<title>{{title}}</title>
+<app-admin-common-nav></app-admin-common-nav>
+<div class="loginWrapper">
+    <div *ngIf="loader" class="loaderCntr" style="display: block;">
+        <div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+    </div>
+    <div class="logincontainer">
+        <div class="row pad">
+                <a class="btn btn-primary posbtn" routerLink="/admin/users" style="float:right;">Back</a>
+            <div class="col-md-4 col-md-offset-4"> <span class="error" style="text-align: center;display: block;"></span>
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading login" style="text-align: center;">
+                        <h3 class="panel-title">Add Business Owner</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div *ngIf="addFormError" class="alert alert-danger box-msg" role="alert" >
+                        </div>
+                        <div *ngIf="sucMsgVal" class="vendorFormCss alert-success" [innerHTML]="sucMsg">
+                        </div>
+                        <form (ngSubmit)="addBO()" #vendorForm="ngForm" name="vendorForm" novalidate>
+                            <fieldset>
+                                <div class="form-group">
+                                    <input  pattern=".*\S.*" required title="This field is required" [(ngModel)]="vendor.full_name" class="form-control" placeholder="Full Name" type="text" name="full_name" #full_name="ngModel">
+                                    <div [hidden]="full_name.valid || full_name.pristine" class="vendorFormCss alert-danger">
+                                        Username is required
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input pattern=".*\S.*" [(ngModel)]="vendor.email" name="email" class="form-control" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" placeholder="Email" type="email" required #email="ngModel">
+                                    <div [hidden]="email.valid || email.pristine" class="vendorFormCss alert-danger">
+                                        Please enter a valid email address
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input pattern=".*\S.*" [(ngModel)]="vendor.business_name" name="business_name" class="form-control" placeholder="Business Name" type="text" required #business_name="ngModel">
+                                    <div [hidden]="business_name.valid || business_name.pristine" class="vendorFormCss alert-danger">
+                                        Please enter a business name
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input pattern=".*\S.*" [(ngModel)]="vendor.address" name="address" class="form-control" placeholder="Address" type="text" required #address="ngModel">
+                                    <div [hidden]="address.valid || address.pristine" class="vendorFormCss alert-danger">
+                                        Please enter a address
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input [(ngModel)]="vendor.phone" class="form-control login" placeholder="Phone No"  type="text" name="phone" pattern="[1-9]{1}[0-9]{9}"  required  #phone="ngModel">
+                                    <div [hidden]="phone.valid || phone.pristine" class="vendorFormCss alert-danger">
+                                        Please enter valid phone number
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input [(ngModel)]="vendor.password" name="password" class="form-control" minlength="6" placeholder="Password" type="password" required #password="ngModel" validateEqual="confirm_password" reverse="true">
+                                    <div [hidden]="password.valid || password.pristine" class="vendorFormCss alert-danger">
+                                        Password is required, it should be 6 characters long
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input [(ngModel)]="vendor.confirm_password" class="form-control login" placeholder="Confirm Password" type="password" name="confirm_password" required #confirm_password="ngModel" validateEqual="password" reverse="false">
+                                    <div [hidden]="confirm_password.valid || confirm_password.pristine" class="vendorFormCss alert-danger">
+                                        Password mismatch
+                                    </div>
+                                </div>
+                                <span style="text-align: center;color: #a94442">{{errorMsg}}</span>
+                                <!-- <div class="forget-password login"> <a style="cursor:pointer" ng-click="init()" data-toggle="modal" data-target="#myModal">Forgot password ?</a> </div> -->
+                                <!-- Change this to a button or input when using this as a form -->
+                                <!-- <a type="submit" (click)="login()" class="btn btn-lg btn-success login btn-block">Login</a> -->
+                                <button type="submit" class="btn btn-lg btn-success login btn-block" [disabled]="!vendorForm.form.valid"> Create Account</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-middle">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Forgot Password</h4>
+                    <span class="error"></span> </div>
+                <div class="modal-body">
+                    <form name="forgetPwdForm" enctype="multipart/form-data" novalidate>
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control login" placeholder="Email address" type="text" ng-model="recovery_email" required>
+                                <span class="error"></span> </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer" style="text-align: center;">
+                    <button type="button" class="btn btn-lg btn-success login btn-block" ng-click="forgetPassword()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

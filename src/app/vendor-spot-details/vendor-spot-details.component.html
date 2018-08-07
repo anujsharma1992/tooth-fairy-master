@@ -1,0 +1,65 @@
+<title>{{title}}</title>
+<app-common-nav></app-common-nav>
+<div id="page-wrapper">
+    <div *ngIf="loader" class="loaderCntr" style="display: block;">
+        <div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+    </div>
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Spot Details
+                    <a style="float:right;" class="btn btn-primary" type="button" routerLink="/spots">Back</a>
+                </h3>
+                <div class="dashboardContent profile clearfix">
+                    <div class="col-md-6">
+                        <div class="dividebor clearfix">
+                            <h4>Name: </h4>
+                            <p>{{spotData.name != '' ? spotData.name : 'N/A' }}</p>
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>Joining Fee: </h4>
+                            <p>{{spotData.price != '' ? 'USD '+spotData.price : 'N/A'}}</p>
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>Description: </h4>
+                            <p>{{spotData.desc != '' ? spotData.desc : 'N/A'}}</p>
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>Created On: </h4>
+                            <p>{{spotData.timestamp | date:'short'}}</p>
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>From Date: </h4>
+                            <p>{{spotData.event_start != '' ? (spotData.event_start | date:'yMd') : ''}}</p>
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>To Date: </h4>
+                            <p>{{spotData.event_end != '' ? (spotData.event_end | date:'yMd') : 'N/A'}}</p>
+                        </div>
+                        <div *ngIf="spotData.from_hours && spotData.to_hours" class="dividebor clearfix">
+                            <h4>Operating Hours: </h4> 
+                            <p>{{spotData.from_hours + ' - ' + spotData.to_hours}}</p>
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>Venue: </h4>
+                            <p>{{spotData.venue != '' ? spotData.venue : 'N/A'}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6" >
+                        <label  *ngIf="spotData.images.length > 0 ? true : false" >Spot Images: </label>
+                        <div class="row cleqarfix">
+                            <div class="col-sm-4" *ngFor="let image of spotData.images">
+                                <div class="btmar">
+                                    <a target="_blank" href="{{ ROOT_PATH+'/spots/'+image}}">
+                                        <img class="img-responsive" src="{{ ROOT_PATH+'/spots/'+image}}" alt="" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

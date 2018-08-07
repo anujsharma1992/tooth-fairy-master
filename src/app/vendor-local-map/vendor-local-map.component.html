@@ -1,0 +1,52 @@
+<title>{{title}}</title>
+<app-common-nav></app-common-nav>
+	<div class="container-fluid">
+
+		<div *ngIf="success" class="alert alert-success box-msg" role="alert" [innerHTML]="sucMsgVal">
+		</div>
+		<div *ngIf="error" class="alert alert-danger box-msg" role="alert" [innerHTML]="errMsgVal">
+		</div>
+		<div class="content-wrapper appointment-wrapper">
+			<section class="content search-wrapper">
+				  <div class="search-container clearfix">
+					<div class="col-md-12">
+					  <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+						<agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+					  </agm-map>
+					</div>
+					<div class="searching">
+					<form action="">
+					  <div class="col-md-11">
+					  <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+					  </div>
+					  <div class=" col-md-1">
+					  <button type="submit" class="btn search-icon"><i class="fa fa-search"></i></button>
+					  </div>
+					</form>
+					</div>
+				  </div>
+				<div class="appointment-div clearfix">
+				  <div class="col-md-12">
+					 <h2>Near by clinics</h2>  
+				  </div>
+				  <div class="clearfix"></div>
+					  <div class="col-md-12">
+					  <div class="border-heading"></div>
+					  </div>
+				  <div *ngFor="let item of nearByClinics;" class="col-md-12">
+					  <div class="list-appointment clearfix">
+						<div class="list-appointment-person">
+						  <img [src]="item.icon?item.icon:'../assets/image/user8-128x128.jpg'"/>
+						</div>
+						<div class="list-appointment-text">
+						   <h5>{{item.name}}</h5>
+						   <div class="near-date-time">
+							  2:00 Tues,2 Jan 2018
+						   </div>
+						</div>
+					  </div>
+				  </div>
+				</div>
+			</section>
+		</div>
+	</div>

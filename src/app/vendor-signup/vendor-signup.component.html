@@ -1,0 +1,178 @@
+<title>{{title}}</title>
+<div class="body-bg">
+   <div class="loginwrap">
+      <div class="loginbox">
+         <div class="login">
+            <div *ngIf="loader" class="loaderCntr" style="display: block;">
+               <div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-centered no-padding clearfix">
+               <div class="col-md-12 col-sm-12 col-xs-12">
+                  <span class="error" style="text-align: center;display: block;"></span>
+                  <div class="login-register-div">
+                     <div *ngIf="addFormError" class="alert alert-danger box-msg" role="alert" >
+                     </div>
+                     <div *ngIf="sucMsgVal" class="vendorFormCss alert-success" [innerHTML]="sucMsg">
+                  </div>
+							 <form enctype="multipart/form-data" method="post" (ngSubmit)="signUp()" #spotForm="ngForm" name="spotForm" novalidate>
+                            <fieldset>
+								<div class="col-md-12 text-center">
+									<h1>Register</h1>
+								 </div>
+								 
+								 <div class="col-md-12 text-center">
+									 <div class="logo">
+									 <div class="logo-box">
+									<div class="form-group">
+										<div class="logo-img">
+										<img *ngIf="!url" style="display:block" src="{{'assets/image/logo-chng.png'}}" />
+										<img  *ngIf="url" [src]="url">
+										</div>
+										 <div class="upload-icon-img upload-font-icon">
+										<input (change)="readUrl($event)" type="file" required multiple="multiple" id="file" placeholder="Upload file" accept=".png,.gif,.jpeg,.jpg" >
+										</div>
+									</div>
+									</div>
+									<p class="grey">Upload image</p>
+									   
+									</div>
+								 </div>
+                                <!-- <div class="form-group"> -->
+                                    <!-- <label>Dentist Images</label> -->
+                                    <!-- <input type="file" required multiple="multiple" id="file" placeholder="Upload file" accept=".png,.gif,.jpeg,.jpg" > -->
+                                <!-- </div> -->
+								<div class="col-md-6">
+									<div class="form-group clearfix">
+									   <label for="signup-text">Title</label>
+									   <select pattern=".*^[A-Za-z.]{2,25}$.*" required title="This field is required" [(ngModel)]="vendor.title" id="signup-text" class="form-control title " type="text" name="spot_title" #spot_title="ngModel">
+											<option value='Dr.'>Dr.</option>
+									   </select>
+									   <div [hidden]="spot_title.valid || spot_title.pristine" class="spotFormCss alert-danger">
+										  Please enter title
+									   </div>
+									</div>
+								 </div>
+                            	<div class="col-md-6">
+									<div class="form-group clearfix">
+									   <label for="signup-first-name">First name</label>
+									   <input pattern=".*^[A-Za-z]{2,25}$.*" required title="This field is required" [(ngModel)]="vendor.firstName" class="form-control firstName question"  type="text" id="signup-first-name" name="first_name" #first_name="ngModel" placeholder="First name">
+									   <div [hidden]="first_name.valid || first_name.pristine" class="spotFormCss alert-danger">
+										  Please enter first name
+									   </div>
+									</div>
+								 </div>
+								 <div class="col-md-6">
+									<div class="form-group clearfix">
+									   <label for="signup-last-name">Last name</label>
+									   <input pattern=".*^[A-Za-z]{2,25}$.*" required title="This field is required" [(ngModel)]="vendor.lastName" placeholder="Last-name" class="question form-control lastName" id="signup-last-name" type="text" name="last_name" #last_name="ngModel">
+									   <div [hidden]="last_name.valid || last_name.pristine" class="spotFormCss alert-danger">
+										  Please enter last name
+									   </div>
+									</div>
+								 </div>
+								 <div class="col-md-6">
+									<div class="form-group clearfix">
+									   <label for="email">Please Select Gender</label>
+									   <select pattern=".*\S.*" required title="This field is required" [(ngModel)]="vendor.gender" class="form-control gender" placeholder="registration number" type="text" name="gender" #gender="ngModel"> 
+									   <option value='m' selected="vendor.gender==m">Male</option>
+									   <option value='f' selected="vendor.gender==f">Female</option>
+									   </select>
+									   <div [hidden]="gender.valid || gender.pristine" class="spotFormCss alert-danger">
+										  Please select gender.
+									   </div>
+									</div>
+								 </div>
+								 <div class="col-md-6">
+									<div class="form-group">
+									   <label for="signup-dob">Date of birth</label>
+									   <input readonly pattern=".*\S.*" title="This field is required" [(ngModel)]="vendor.dateOfBirth"  class="form-control pointer datepicker dateOfBirth" type="text" name="dateOfBirth" id="signup-dob" #dateOfBirth="ngModel" placeholder="Date of birth">
+									   <div [hidden]="dateOfBirth.valid || dateOfBirth.pristine" class="spotFormCss alert-danger">
+										  Please select date of birth
+									   </div>
+									</div>
+								 </div>
+								 <div class="col-md-6">
+									<div class="form-group clearfix">
+									   <label for="signup-registration-number">Registration number</label>
+									   <input pattern=".*^[0-9]{9}$.*" required title="This field is required" [(ngModel)]="vendor.regNumber" class="form-control regNumber " id="signup-registration-number" type="text" name="regNumber" #regNumber="ngModel" placeholder="9 Digit number">
+									   <div [hidden]="regNumber.valid || regNumber.pristine" class="spotFormCss alert-danger">
+										  Registration number
+									   </div>
+									</div>
+								 </div>
+								 <div class="col-md-12">
+									<div class="form-group">
+									   <label for="field1">House no/ Street 1</label>
+									   <input pattern=".*^[a-zA-Z0-9 ,.-]{5,100}$.*" required title="This field is required" [(ngModel)]="addressObj.field1" class="form-control address"  type="text" name="field1" #field1="ngModel" placeholder="House no/ Street 1">
+									   <div [hidden]="field1.valid || field1.pristine" class="spotFormCss alert-danger">
+										  Address Line 1 required
+									   </div>
+									</div>
+								 </div>
+								 
+								 <div class="col-md-12">
+									<div class="form-group">
+									   <label for="field2">Street 2</label>
+									   <input pattern=".*^[a-zA-Z0-9 ,.-]{5,100}$.*" required title="This field is required" [(ngModel)]="addressObj.field2" class="form-control field2"  type="text" name="field2" #field2="ngModel" placeholder="street 2">
+									   <div [hidden]="field2.valid || field2.pristine" class="spotFormCss alert-danger">
+										  Address Line 2
+									   </div>
+									</div>
+								 </div>
+								 
+								 <div class="col-md-12">
+									<div class="form-group">
+									   <label for="field3">State, City, Postal Code/Zip, Country</label>
+									   <input pattern=".*^[a-zA-Z0-9 ,.-]{5,100}$.*" required title="This field is required" [(ngModel)]="addressObj.field3" class="form-control field3"  type="text" name="field3" #field3="ngModel" placeholder=" state, city, postal code/zip, country">
+									   <div [hidden]="field3.valid || field3.pristine" class="spotFormCss alert-danger">
+										  Address Line 3
+									   </div>
+									</div>
+								 </div>
+								 
+								 
+								 <div class="col-md-6">
+									<div class="form-group">
+									   <label for="phone">Phone</label>
+									   <input pattern=".*^[0-9+]{13}$.*" required title="This field is required" [(ngModel)]="vendor.phone" class="form-control email" type="text" name="phone" #phone="ngModel" placeholder="+49999999999">
+									   <div [hidden]="phone.valid || phone.pristine" class="spotFormCss alert-danger">
+										  Phone
+									   </div>
+									</div>
+								 </div>
+								 <div class="col-md-6">
+									<div class="form-group">
+									   <label for="signup-email">Email</label>
+									   <input pattern=".*^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$.*" required title="This field is required" [(ngModel)]="vendor.email" class="form-control email"   id="signup-email" type="text" name="email" #email="ngModel" placeholder="Johnathandoe@domain.com">
+									   <div [hidden]="email.valid || email.pristine" class="spotFormCss alert-danger">
+										  Email
+									   </div>
+									</div>
+								 </div>
+								 
+								<div class="col-md-12">
+                        <div class="form-group btn-div text-center">
+                           <span style="text-align: center;color: #a94442">{{errorMsg}}</span>
+                           <button type="submit" class="btn btn-link" [disabled]="!spotForm.form.valid">Sign Up</button>
+                        </div>
+                     </div>
+                  </fieldset>
+                  </form>
+                  <!-- <div class="col-md-12"> -->
+                     <!-- <div class="Forgot-password text-center"> -->
+                        <!-- <a href="#">Forgot Password ?</a> -->
+                     <!-- </div> -->
+                  <!-- </div> -->
+                  <div class="clearfix"></div>
+                  <div class="forgot-password-border">
+                  </div>
+                  <div class="signup-div text-center">
+                     Already have an account ? <a routerLink="/login" >SignIn</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>

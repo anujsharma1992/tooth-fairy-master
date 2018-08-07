@@ -1,0 +1,45 @@
+<title>{{title}}</title>
+<app-common-nav></app-common-nav>
+<div id="page-wrapper">
+    <div *ngIf="loader" class="loaderCntr" style="display: block;">
+        <div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+    </div>
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Payer Details
+                    <a style="float:right;" class="btn btn-primary" type="button" routerLink="/bookings/details/{{bookingId}}">Back</a>
+                </h3>
+                <div class="dashboardContent profile clearfix ">
+                    <div class="col-md-4 no-padding">
+                        <div *ngIf="sucMsg" class="spotFormCss alert-success" [innerHTML]="sucMsg">
+                        </div>
+                        <div *ngIf="errorMsg" class="alert alert-danger box-msg" role="alert" [innerHTML]="errorMsg">
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>Name: </h4>
+                            <p>{{payerDetails.full_name != '' ? payerDetails.full_name : 'N/A' }}</p>
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>Email: </h4>
+                            <p>{{payerDetails.email  != '' ? payerDetails.email : 'N/A'}}</p>
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>Phone: </h4>
+                            <p>{{payerDetails.phone  != '' ? payerDetails.phone : 'N/A'}}</p>
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>Total Amount: </h4>
+                            <input placeholder="Enter Total Amount" type="number" class="form-control" #finalAmtVal />
+                            <div class="text-left"> <span style="display: inline-block;color: #a94442" [innerHTML]="amount_err"></span></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                     <a style="float:right;" class="btn btn-primary" (click) = "payNow(finalAmtVal.value)">Paynow</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

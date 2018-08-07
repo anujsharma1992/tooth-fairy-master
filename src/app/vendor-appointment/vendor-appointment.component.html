@@ -1,0 +1,49 @@
+<title>{{title}}</title>
+<app-common-nav></app-common-nav>
+<div class="container-fluid">
+<div *ngIf="loader" class="loaderCntr" style="display: block;">
+	<div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+</div>
+	<div class="content-wrapper appointment-wrapper">
+	<section class='content'>
+		<div class="appointment-div clearfix">
+			  <div class="col-md-8">
+				 <h2>Previous Appoinment</h2>  
+			  </div>
+			  <div class="col-md-4 sortby text-right">
+				<ul class="nav navbar-nav navbar-right">
+				  <li class="dropdown">
+						<a id="drop" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">Sport by &nbsp;<i class="fa fa-angle-down icon-rotates" aria-hidden="true"></i>
+						  </a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="drop">
+							 <li><a>Name</a></li>
+							 <li><a>Appointment</a></li>
+						</ul>
+				  </li>
+				</ul>
+			  </div>
+			  <div class="clearfix"></div>
+			  <div class="col-md-12">
+			  <div class="border-heading"></div>
+			  </div>
+			  <div class="col-md-12" *ngFor='let item of nearByClinics; let i=index;'>
+				  <div class="list-appointment clearfix">
+					<div class="list-appointment-person">
+					<img src="{{item.photo_url?basePathimage+item.photo_url:'../assets/image/user8-128x128.jpg'}}" />
+					</div>
+					<div class="list-appointment-text">
+					   <h5>{{item.firstName +" "+ item.lastName}}</h5>
+					   <p>{{item.notes}}</p>
+					</div>
+					<div class="date-time">
+					 {{item.booking_time | date:'fullDate'}} T {{item.booking_time.split('T')[1].split('Z')[0].split('.')[0]}}
+					</div>
+					<a  [routerLink]="['details', {uid:item.uid,booking_id:item.id }]" [routerLinkActive]="['active']" class="list-appointment-view">
+						<i class="fa fa-eye" aria-hidden="true"></i> &nbsp; View
+					</a>
+				  </div>
+			  </div>
+			</div>
+			</section>
+		</div>
+</div>

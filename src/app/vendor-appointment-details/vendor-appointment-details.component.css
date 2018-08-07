@@ -1,0 +1,119 @@
+.unavailable-bg .unavailable-img{
+	width:139px;
+	float:left;
+}
+.unavailable-bg .unavailable-div{
+   padding:0px 30px;
+}
+.unavailable-bg .unavailable-note{
+   font-family: 'RobotoMedium';
+   color:#adadad;
+   font-size:14px;
+   padding:10px 0px;
+}
+.unavailable-bg .unavailable-note.ongoing-note{
+   font-family: 'RobotoMedium';
+   color:#adadad;
+   font-size:14px;
+   margin-top:30px;
+}
+.unavailable-bg .unavailable-text{
+	margin-left:145px;
+	font-family: 'RobotoMedium';
+	color:#52b8e1;
+}
+.unavailable-bg .unavailable-text h4{
+	margin-top: 80px;
+}
+.ongoing-user-div{
+	padding:0px 30px;
+}
+.ongoing-user-div .ongoing-ring{
+	width:41px;
+	float:left;
+	margin-top: 30px;
+}
+.ongoing-user-div .ongoing-img img{
+	width:100%;
+}
+.ongoing-user-div .ongoing-img-inner{
+    overflow:hidden;
+	border-radius:10px;
+}
+.ongoing-user-div .ongoing-info{
+	margin-left:10px;
+	float:left;
+}
+.ongoing-user-div .ongoing-info span{
+	display:block;
+	color:#7185a8;
+	font-family: 'RobotoMedium';
+	font-size:14px;
+}
+.ongoing-user-div .ongoing-info h6{
+	color:#50bce3;
+	 font-family: 'RobotoBold';
+}
+.ongoing-user-div .ongoing-img{
+	width:100px;
+	overflow:hidden;
+	padding:5px;
+	border-radius:10px;
+	box-shadow: 0px 15px 35px 0px rgba(80, 188, 227, 0.09);
+	float:left;
+	margin-left: 10px;
+	background:#fff;
+}
+.approval-div .approval-content .approval-text h1{
+	color:#7185a8;
+	font-family: 'RobotoLight';
+	font-size:23px;
+}
+.approval-div .approval-content .approval-text p{
+	color:#5f5f5f;
+	font-family: 'RobotoLight';
+	font-size:13px;
+}
+.approval-div.approvalbox {
+    position: relative;
+    display: table-row;
+    z-index: 99999;
+}
+.approval-div.approvalbox .approvalmiddle {
+    display: table-cell;
+    vertical-align: middle;
+	padding:30px 0px;
+}
+.content-wrapper.video-wrapper.clearfix{
+	position: absolute;
+    margin-top: 50px;
+}
+.Patient-Prescription .btn-link{
+padding:0px;  
+height:34px;
+}
+.Patient-Prescription .form-control{
+  height:34px;
+  padding:6px 12px;
+font-size:14px;
+line-height:42px;
+color:#555;
+background:#fff;
+border:1px solid #ccc;
+border-radius:4px;
+}
+.Patient-Prescription .Prescription-padding{
+  padding-left:5px;
+padding-right:5px;
+}
+.Patient-Prescription .Prescription-padding P{
+    color: #8895a7;
+    font-family: 'RobotoRegular';
+    font-size: 14px;
+ }
+.car-detail-wrapper .car-detail {
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 15px 28px 0px rgba(0, 0, 0, 0.09);
+    min-height: 400px;
+}

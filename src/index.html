@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <base href="/">
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/css/sb-admin.css" rel="stylesheet">
+  <link href="../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="../assets/css/bootstrap-social.css" rel="stylesheet" type="text/css">
+  <link href="../assets/css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+  <link href="../assets/css/jquery.jscrollpane.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="../assets/css/baguetteBox.min.css">
+  <link rel="stylesheet" href="../assets/css/tagtacular.css" media="all" />
+  <link href="../assets/css/dataTables.min.css" rel="stylesheet" type="text/css">
+  <link href="../assets/css/style.css" rel="stylesheet" type="text/css">
+  <link href="../assets/css/loader.css" rel="stylesheet" type="text/css">
+  <link href="../assets/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">
+  <link href="../assets/css/style.css" rel="stylesheet" type="text/css">
+  <link href="../assets/css/flipclock.css" rel="stylesheet" type="text/css">
+  <link href="../assets/css/TB.min.css" rel="stylesheet" type="text/css">
+  <!-- All Libreries here -->
+  <!-- <script src="https://checkout.stripe.com/checkout.js"></script> -->
+  <script src="../assets/js/jquery.min.js"></script>
+  <!-- <script src="../assets/js/date.js"></script> -->
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/stripe.js"></script>
+  <script src="../assets/js/dataTables.min.js"></script>
+  <script src="../assets/js/jquery-ui.min.js"></script>
+  <script src="../assets/js/jquery.jscrollpane.min.js"></script>
+  <script src="../assets/js/tagtacular.min.js"></script>
+  <script src="../assets/js/baguetteBox.min.js"></script>
+  <script src="../assets/js/bootstrap.min.js"></script>
+  <script src="../assets/js/jquery-ui-timepicker-addon.js"></script>
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/script2.js"></script>
+  <script src="../assets/js/flipclock.js"></script>
+  <script src="../assets/js/jquery.progressTimer.js"></script>
+  <script src="../assets/js/opentok.min.js"></script>
+  <script>
+   var timer = false; 
+   var counter = 0; 
+ function TimerInterval(fn, time) {
+ 
+    this.start = function () {
+        if (!this.isRunning())
+            timer = setInterval(fn, time);
+    };
+    this.stop = function () {
+        clearInterval(timer);
+        timer = false;
+    };
+    this.isRunning = function () {
+	console.log(timer !== false);
+        return timer !== false;
+    };
+}
+  </script>
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAXhwY1oGHW8yJGpG7qjjpNda66L7Q_waA"></script> -->
+</head>
+<body>
+<app-root>
+	<div class="loaderCntr" style="display: block;">
+        <div class="loading-screen loading-screen--white"><span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+    </div>
+</app-root>
+<script>
+<!-- $(document).ready(function(){ -->
+<!-- setTimeout(function(){ -->
+<!-- jQuery('.dropdown').on('show.bs.dropdown', function(e){ -->
+  <!-- jQuery(this).find('.dropdown-menu').first().stop(true, true).slideDown(300); -->
+<!-- }); -->
+
+<!-- jQuery('.dropdown').on('hide.bs.dropdown', function(e){ -->
+  <!-- jQuery(this).find('.dropdown-menu').first().stop(true, true).slideUp(200); -->
+<!-- }); -->
+
+<!-- var clock = jQuery('.clock').FlipClock(5*60, { -->
+	<!-- autostart: false, -->
+	<!-- clockFace: 'MinuteCounter', -->
+	<!-- countdown: true -->
+<!-- }); -->
+<!-- function startTimer() { -->
+	<!-- clock.start();           -->
+<!-- } -->
+
+<!-- function Timer(duration, display)  -->
+<!-- { -->
+    <!-- var timer = duration, hours, minutes, seconds; -->
+    <!-- setInterval(function () { -->
+        <!-- hours = parseInt((timer /3600)%05, 10) -->
+        <!-- minutes = parseInt((timer / 60)%60, 10) -->
+
+		<!-- hours = hours < 10 ? "0" + hours : hours; -->
+        <!-- minutes = minutes < 10 ? "0" + minutes : minutes; -->
+
+        <!-- display.html(hours + "<span class='h_m'>h</span>" + "<span class='clock-dots'>:</span>"+ minutes + "<span class='h_m'>mins</span>"); -->
+
+				<!-- --timer; -->
+    <!-- }, 1000); -->
+<!-- } -->
+
+<!-- jQuery(function ($)  -->
+<!-- { -->
+    <!-- var twentyFourHours = 05 * 60 * 60; -->
+    <!-- var display = $('#remainingTime'); -->
+    <!-- Timer(twentyFourHours, display); -->
+<!-- }); -->
+
+<!-- jQuery("#progressTimer").progressTimer({ -->
+    <!-- timeLimit: 300, -->
+    <!-- warningThreshold: 10, -->
+    <!-- baseStyle: 'btn-primary', -->
+    <!-- warningStyle: 'btn-primary', -->
+    <!-- completeStyle: 'btn-primary', -->
+    <!-- onFinish: function() { -->
+        <!-- console.log("I'm done"); -->
+    <!-- } -->
+<!-- }); -->
+
+<!-- }, 1000); -->
+<!-- }); -->
+</script>
+</body>
+</html>

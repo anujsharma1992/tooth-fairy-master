@@ -1,0 +1,72 @@
+div.tagtacular_basic .tagtacular_edit_tray input[type="text"]{
+	display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.tagtacular_tag_tray:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+div.tagtacular_basic .tagtacular_edit_tray input[type="text"]:focus{  
+outline:none;
+} 
+div.tagtacular_basic .tagtacular_edit_tray input[type="text"]::-webkit-input-placeholder { 
+   font-size:14px;
+   color:#8895a7;
+    font-family: FontAwesome,'RobotoRegular';
+}
+div.tagtacular_basic .tagtacular_edit_tray input[type="text"]::-moz-placeholder  { 
+   font-size:14px;
+   color:#8895a7;
+    font-family: FontAwesome,'RobotoRegular';
+} 
+div.tagtacular_textlike .tagtacular_tag_tray {
+	margin-right: 10px;
+	float: left;
+	padding-top: 5px;
+	font-size: 1.1em;
+}
+div.tagtacular_textlike a.tagtacular_delete{
+	text-decoration: none;
+	color: #d00;
+	font-size: 0.8em;
+}
+
+/* Basic Style */
+
+div.tagtacular_basic .tagtacular_edit_tray {
+	margin: 4px 4px 4px 4px;
+	padding: 4px 4px 4px 4px;
+}
+div.tagtacular_basic .tagtacular_tag_tray {
+	margin: 4px 4px 4px 4px;
+	padding: 6px 6px 6px 6px;
+	font-size: 1.1em;
+}
+
+div.tagtacular_basic .tagtacular_tag {
+    margin: 4px 8px 4px 0px;
+    padding: 5px 10px 5px 10px;
+}
+
+div.tagtacular_basic .tagtacular_tag a.tagtacular_delete{
+	color: #9fafb8;
+	font-size: 0.8em;
+	text-decoration: none;
+}
+
+div.tagtacular_basic.red .tagtacular_tag{
+	background-color: #f4f8f9;
+    float:left;
+    border-radius:5px;
+	color: #9fafb8;
+}

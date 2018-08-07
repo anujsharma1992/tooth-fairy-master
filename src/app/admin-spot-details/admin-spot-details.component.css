@@ -1,0 +1,18 @@
+.btmar{
+	position: relative;
+	border: 1px solid #ccc;
+	height: 100px;
+	margin-bottom: 10px;
+}
+.btmar img{
+	position: absolute;
+	 max-width: 96%;
+	 max-height: 96%;
+	 left: 50%;
+	 top: 50%;
+	 transform: translate(-50%, -50%);
+	 -moz-transform: translate(-50%, -50%);
+	 -webkit-transform: translate(-50%, -50%);
+	 -ms-transform: translate(-50%, -50%);
+	 -o-transform: translate(-50%, -50%);
+}

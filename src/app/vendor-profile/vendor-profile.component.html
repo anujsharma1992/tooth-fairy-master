@@ -1,0 +1,945 @@
+<title>{{title2}}</title>
+<app-common-nav></app-common-nav>
+<div class="loginWrapper">
+   <div *ngIf="loader" class="loaderCntr" style="display: block;">
+      <div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+   </div>
+   <div *ngIf="addFormError" class="alert alert-danger box-msg" role="alert"></div>
+   <div *ngIf="sucMsgVal" class="vendorFormCss alert-success" [innerHTML]="sucMsg"></div>
+<div *ngIf='profilePageWait' class="content-wrapper my-account-wrapper">
+   <section class="content">
+      <div class="my-account-wrapper-content">
+         <div class="panel-group i-accordion">
+            <div class="panel panel-success" id="basic-div">
+               <div class="panel-heading collapsed" data-toggle="collapse" data-parent=".i-accordion" href="#basic-detail" aria-expanded="false">
+                  <h4 class="panel-title">Basic-detail<i class="fa fa-angle-down pull-right"></i></h4>
+               </div>
+               <div id="basic-detail" class="panel-collapse collapse in" aria-expanded="false">
+                  <div class="panel-body">
+                     <div class="pannel-border"></div>
+                     <div class="BasicDetail-div BasicDetail-div-chng  clearfix">
+                        <div class="clearfix"></div>
+                        <div class="login-form clearfix">
+                           <form enctype="multipart/form-data" method="post" (ngSubmit)="updateMyProfile()" #vendorForm="ngForm" name="vendorForm" novalidate>
+                           <fieldset>
+                              <div class="col-md-6">
+                                 <div class="logo">
+                                    <div class="login-logo-img clearfix">
+                                       <div class="logo-box">
+                                          <div class="logo-img">
+                                             <img *ngIf="!url" class="img-responsive" src="{{ vendor.image !='' ? basePathimage+vendor.image:'../assets/image/userlogo.png'}}"/>
+                                             <img *ngIf="url" class="img-responsive" [src]="url">
+                                          </div>
+                                          <div class="upload-icon-img upload-font-icon">
+                                             <input type="file" id="file" (change)="readUrl($event)" placeholder="Upload file" accept=".png,.gif,.jpeg,.jpg">
+                                          </div>
+                                       </div>
+									   <div class=" name-div">
+                                          {{vendor.firstName +" "+ vendor.lastName}}
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+							  <div class="col-md-6">
+							     <div class="logo">
+                                    <div class="login-logo-img clearfix">
+									   <div class="logo-box">
+                                          <div class="logo-img">
+                                             <img *ngIf="!url_signature" class="img-responsive" src="{{ vendor.signature !='' ? basePathimage+vendor.signature:'../assets/image/userlogo.png'}}"/>
+                                             <img *ngIf="url_signature" class="img-responsive" [src]="url_signature"/>
+                                          </div>
+                                          <div class="upload-icon-img upload-font-icon">
+                                             <input type="file" id="file_signaure" (change)="readUrl_signature($event)" placeholder="Upload file" accept=".png,.gif,.jpeg,.jpg">
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+							  </div>
+                              <div class="col-md-6 divwidthright">
+                                 <div class="form-group clearfix">
+                                    <label>Tittle</label>
+                                    <select pattern=".*^[A-Za-z.]{2,25}$.*" required title="This field is required" [(ngModel)]="vendor.title" id="signup-text" class="form-control title " type="text" name="spot_title" #spot_title="ngModel">
+											<option value='Dr.'>Dr.</option>
+									   </select>
+									<!-- <input  pattern=".*\S.*" required title="This field is required" [(ngModel)]="vendor.title" class="form-control" placeholder="Example, Dr." type="text" name="title" #title="ngModel"> -->
+                                    <!-- <div [hidden]="title.valid || title.pristine" class="vendorFormCss alert-danger"> -->
+                                       <!-- title name is required -->
+                                    <!-- </div> -->
+                                 </div>
+                              </div>
+                              <div class="col-md-6 divwidthleft">
+                                 <div class="form-group clearfix">
+                                    <label>First Name</label>
+                                    <input  pattern=".*\S.*" required title="This field is required" [(ngModel)]="vendor.firstName" class="form-control" placeholder="First Name" type="text" name="firstName" #firstName="ngModel">
+                                    <div [hidden]="firstName.valid || firstName.pristine" class="vendorFormCss alert-danger">
+                                       first name is required
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-md-6 divwidthright">
+                                 <div class="form-group clearfix">
+                                    <label>Last Name</label>
+                                    <input  pattern=".*\S.*" required title="This field is required" [(ngModel)]="vendor.lastName" class="form-control" placeholder="Last Name" type="text" name="lastName" #lastName="ngModel">
+                                    <div [hidden]="lastName.valid || lastName.pristine" class="vendorFormCss alert-danger">
+                                       last name is required
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-md-6 divwidthleft">
+                                 <div class="form-group clearfix">
+                                    <label>Gender</label>
+                                    <select pattern=".*\S.*" required title="This field is required" [(ngModel)]="vendor.gender" class="form-control gender" placeholder="registration number" type="text" name="gender" #gender="ngModel"> 
+                                    <option value='m' selected="vendor.gender==m">male</option>
+                                    <option value='f' selected="vendor.gender==f">female</option>
+                                    </select>
+                                    <div [hidden]="gender.valid || gender.pristine" class="vendorFormCss alert-danger">
+                                       Please select gender.
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-md-6 divwidthright">
+                                 <div class="form-group clearfix">
+                                    <label>House no/ street 1</label>
+                                    <input  pattern=".*^[a-zA-Z0-9 ,.-]{5,100}$.*" required title="This field is required" [(ngModel)]="addressObj.field1" class="form-control" placeholder="House no/ street 1" type="text" name="field1" #field1="ngModel">
+                                    <div [hidden]="field1.valid || field1.pristine" class="vendorFormCss alert-danger">
+                                       House no/ street 1s is required
+                                    </div>
+                                 </div>
+                              </div>
+							  
+							  <div class="col-md-6 divwidthleft">
+                                 <div class="form-group clearfix">
+                                    <label>Street 2</label>
+                                    <input  pattern=".*^[a-zA-Z0-9 ,.-]{5,100}$.*" required title="This field is required" [(ngModel)]="addressObj.field2" class="form-control" placeholder="Street 2" type="text" name="field2" #field2="ngModel">
+                                    <div [hidden]="field2.valid || field2.pristine" class="vendorFormCss alert-danger">
+                                       Stree 2 is required
+                                    </div>
+                                 </div>
+                              </div>
+							  
+							  <div class="col-md-6 divwidthright">
+                                 <div class="form-group clearfix">
+                                    <label>State, City, Postal Code/Zip, Country</label>
+                                    <input  pattern=".*^[a-zA-Z0-9 ,.-]{5,100}$.*" required title="This field is required" [(ngModel)]="addressObj.field3" class="form-control" placeholder="State, City, Postal Code/Zip, Country" type="text" name="field3" #field3="ngModel">
+                                    <div [hidden]="field3.valid || field3.pristine" class="vendorFormCss alert-danger">
+                                       State, City, Postal Code/Zip, Country is required
+                                    </div>
+                                 </div>
+                              </div>
+							  
+							  
+							  <div class="col-md-6 divwidthleft">
+								<div class="form-group">
+								   <label for="signup-dob">Date of birth</label>
+								   <input style='background: transparent;' readonly pattern=".*\S.*" title="This field is required" [(ngModel)]="vendor.dateOfBirth"  class="form-control pointer  dateOfBirth" type="text" name="dateOfBirth"  #dateOfBirth="ngModel" placeholder="Date of birth">
+								   <div [hidden]="dateOfBirth.valid || dateOfBirth.pristine" class="spotFormCss alert-danger">
+									  Please select date of birth
+								   </div>
+								</div>
+							 </div>
+							 <div class="col-md-6 divwidthright">
+                                 <div class="form-group clearfix">
+                                    <label>Phone</label>
+                                    <input  pattern=".*^[0-9+]{13}$.*" required title="This field is required" [(ngModel)]="vendor.phone" class="form-control" placeholder="Mobile Number" type="text" name="phone" #phone="ngModel">
+                                    <div [hidden]="phone.valid || phone.pristine" class="vendorFormCss alert-danger">
+                                       phone is required
+                                    </div>
+                                 </div>
+                              </div>
+							  <div class="col-md-6 divwidthleft">
+                                 <div class="form-group clearfix">
+                                    <label>Email ID</label>
+                                    <input  pattern=".*^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$.*" required title="This field is required" [(ngModel)]="vendor.email" class="form-control" placeholder="Last Name" disabled type="text" name="email" #email="ngModel">
+                                    <div [hidden]="email.valid || email.pristine" class="vendorFormCss alert-danger">
+                                       email is required
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-md-6 divwidthright">
+                                 <div class="form-group clearfix">
+                                    <label>Registration Number</label>
+                                    <input  pattern=".*\S.*" required title="This field is required" [(ngModel)]="vendor.regNumber" class="form-control" placeholder="435643323" type="text" name="regNumber" #regNumber="ngModel">
+                                    <div [hidden]="regNumber.valid || regNumber.pristine" class="vendorFormCss alert-danger">
+                                       registration is required
+                                    </div>
+                                 </div>
+                              </div>
+                              <span style="text-align: center;color: #a94442">{{errorMsg}}</span>
+                              <div class="col-md-12">
+                                 <div class="form-group btn-div text-right">
+                                    <button type="button" (click)='updateMyProfile()' class="btn btn-link" [disabled]="!vendorForm.form.valid">Save</button>
+                                 </div>
+                              </div>
+                           </fieldset>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="panel panel-success" id="bank-div">
+               <div class="panel-heading collapsed" data-toggle="collapse" data-parent=".i-accordion" href="#Bank-detail" aria-expanded="false">
+                  <h4 class="panel-title">Bank-detail<i class="fa fa-angle-down pull-right"></i></h4>
+               </div>
+               <div id="Bank-detail" class="panel-collapse collapse" aria-expanded="false">
+                  <div class="panel-body">
+                     <div class="pannel-border"></div>
+                     <div class="BasicDetail-div BankDetail-div clearfix">
+                        <div class="clearfix"></div>
+                        <form method="post" (ngSubmit)="saveBank()" #bankForm="ngForm" name="bankForm" novalidate>
+							<div *ngIf="bankDetails" class="login-form clearfix">
+							   <div class="col-md-6 divwidthright">
+								  <div class="form-group clearfix">
+									
+									 <label for="acc_name">Account holders name </label>
+									 <input pattern=".*\S.*" required title="this filed is reuqired" [(ngModel)]="bankDetails.acc_name" type="text" name="acc_name" class="form-control" placeholder="Jhon, Sumit etc" #acc_name="ngModel"/>
+									 <div [hidden]="acc_name.valid || acc_name.pristine" class="vendorFormCss alert-danger">
+                                       Account Name is required
+                                    </div>
+								  </div>
+							   </div>
+							   <div class="col-md-6 divwidthleft">
+								  <div class="form-group clearfix">
+									 <label for="acc_number">Account number</label>
+									 <input pattern=".*\S.*" required title="this filed is reuqired" [(ngModel)]="bankDetails.acc_number" type="text" name="acc_number" class="form-control" placeholder="8750300404" #acc_number="ngModel"/>
+									 <div [hidden]="acc_number.valid || acc_number.pristine" class="vendorFormCss alert-danger">
+                                       Account Number is required
+								     </div>
+								  </div>
+							   </div>
+							   <div class="col-md-6 divwidthright">
+								  <div class="form-group clearfix">
+									 <label for="sort_code">Sort code</label>
+									 <input pattern=".*\S.*" required title="this filed is reuqired" [(ngModel)]="bankDetails.sort_code" type="text" name="sort_code" class="form-control" placeholder="58969969" #sort_code="ngModel"/>
+									 <div [hidden]="sort_code.valid || sort_code.pristine" class="vendorFormCss alert-danger">
+                                       Sort Code is required
+									 </div>
+								  </div>
+							   </div>
+							   <div class="col-md-6 divwidthleft">
+								  <div class="form-group clearfix">
+									 <label for="swift_number">SWIFT number</label>
+									 <input pattern=".*\S.*" required title="this filed is reuqired" [(ngModel)]="bankDetails.swift_number" type="text" name="swift_number" class="form-control" placeholder="8994030" #swift_number="ngModel"/>
+									 <div [hidden]="swift_number.valid || swift_number.pristine" class="vendorFormCss alert-danger">
+                                       Swift Number is required
+									 </div>
+								  </div>
+							   </div>
+							   <div class="col-md-6 divwidthright">
+								  <div class="form-group clearfix">
+									 <label for="branch_number">Branch number</label>
+									 <input pattern=".*\S.*" required title="this filed is reuqired" [(ngModel)]="bankDetails.branch_number" type="text" name="branch_number" class="form-control" placeholder="0494003" #branch_number="ngModel"/>
+									<div [hidden]="branch_number.valid || branch_number.pristine" class="vendorFormCss alert-danger">
+                                       Branch Number is required
+									 </div>
+								  </div>
+							   </div>
+							   <div class="col-md-6 divwidthleft">
+								  <div class="form-group clearfix">
+									 <label for="iban_number">IBAN number</label>
+									 <input pattern=".*\S.*" required title="this filed is reuqired" [(ngModel)]="bankDetails.iban_number" type="text" name="iban_number" class="form-control" placeholder="0494003" #iban_number="ngModel"/>
+									<div [hidden]="iban_number.valid || iban_number.pristine" class="vendorFormCss alert-danger">
+                                       IBAN is required
+									 </div>
+								  </div>
+							   </div>
+							   <div class="col-md-12">
+								  <div class="form-group btn-div text-right">
+										<button type="button" class="btn btn-link" (click)="saveBank()" [disabled]="!bankForm.form.valid">Save</button>
+									 <!-- <button type="button" class="btn btn-link" >Save</button> -->
+								  </div>
+							   </div>
+							</div>
+						</form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="panel panel-success" id="ProfessionalCertificate-div">
+               <div class="panel-heading collapsed" data-toggle="collapse" data-parent=".i-accordion" href="#ProfessionalCertificate" aria-expanded="false">
+                  <h4 class="panel-title">Professional Certificate<i class="fa fa-angle-down pull-right"></i></h4>
+               </div>
+               <div id="ProfessionalCertificate" class="panel-collapse collapse" aria-expanded="false">
+                  <div class="panel-body">
+                     <div class="pannel-border"></div>
+                     <div class="BasicDetail-div clearfix">
+                        <div class="clearfix"></div>
+                        <div *ngIf="addFormError" class="alert alert-danger box-msg" role="alert"></div>
+                        <div *ngIf="sucMsgVal" class="spotFormCss alert-success" [innerHTML]="sucMsg"></div>
+                     <form class='docUploader' enctype="multipart/form-data" method="post" (ngSubmit)="LetsSaveFlags()" #spotForm="ngForm" name="spotForm" novalidate>
+                     <fieldset>
+					     <div class="col-md-12">
+							<div class="form-group col-md-6">
+							   <input style="width:100%;resize:none;" type='password' class="form-control" id="password_pdf" [(ngModel)]="password_pdf" name="password_pdf"  placeholder="Password" (input)="onSearchChange($event.target.value)" />
+							   <span class='password_error' style="color:red;display:none;">password cannot be blank and minimum 6 char</span>
+							</div>
+						 </div>
+                        <div class="col-md-6">
+                           <div class="verified">
+                              <div class="verified-box clearfix">
+                                 <div class="col-md-9">
+                                    <h4><i class="fa fa-file-text-o" aria-hidden="true"></i> &nbsp;Indemnity Certificate</h4>
+									<!-- GDC Certificate Document -->
+                                 </div>
+                                 <div class="col-md-3 text-right">
+                                    <div class="btn-bs-file btn-attachment">
+                                       <input required (change)='readUrlFromDoc($event, 0)' class="hide_file" requireFile type="file" id="indemnity" [ngModel]="fileContent.indemnity" name="indemnity" #indemnity="ngModel" placeholder="Upload file" accept=".pdf">
+                                       <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </div>
+                                 </div>
+								 <div class="col-md-12">
+                                    <a *ngIf="simpleDocUrls.indemnity" [href]='baseImagePath+simpleDocUrls.indemnity' target="_blank">{{simpleDocUrls.indemnity_original}}</a>
+                                    <p *ngIf="!simpleDocUrls.indemnity || !indemnity.valid" style="color: red">This field is required!</p>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <textarea style="width:100%;resize:none;" rows="1"  class="form-control" id="indemnity_txt" [(ngModel)]="fileContent.indemnity_txt" name="indemnity_txt" #indemnity_txt="ngModel" placeholder="write your comments..." ></textarea>
+                                    </div>
+                                 </div>
+								 
+								 <div *ngIf="docloader[0]" class='thisloader'>
+									<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+									  <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+										s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+										c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"></path>
+									  <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+										C22.32,8.481,24.301,9.057,26.013,10.047z" transform="rotate(293.896 20 20)">
+										<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"></animateTransform>
+										</path>
+									</svg>
+								</div>
+                              </div>
+                              <div>
+								<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.indemnity || !indemnity.valid) else other_content">
+									<img src="../assets/image/notyetuploaded.png"/> Not yet Uploaded
+								</div>
+								<ng-template #other_content>
+									<div  class="uploaded-text" *ngIf="(!simpleDocUrls.indemnity) else other_content2">
+										<!-- <img src="../assets/image/uploaded.png"/> uploading... -->
+									</div>
+									<ng-template #other_content2>
+										<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.doc_verified) else other_content3">
+											<div class="Not-yet-verified-text">
+												<img src="../assets/image/Notyetverified.png" width="9" height="17"/> Not yet verified	
+											</div>
+										</div>
+										<ng-template #other_content3>
+											<div class="verified-text">
+												<img src="../assets/image/verified.png" width="20" height="12"/> Verified	
+											</div>
+										</ng-template>									
+									</ng-template>									
+								</ng-template>                                 
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="verified">
+                              <div class="verified-box clearfix">
+                                 <div class="col-md-9">
+                                    <h4><i class="fa fa-file-text-o" aria-hidden="true"></i> &nbsp;ID Proof 1</h4>
+                                 </div>
+                                 <div class="col-md-3 text-right">
+                                    <div class="btn-bs-file btn-attachment">
+                                       <input (change)='readUrlFromDoc($event, 1)' class='hide_file' requireFile type="file" id="id_proof" [ngModel]="fileContent.id_proof" name="id_proof" #id_proof="ngModel" placeholder="Upload file" accept=".pdf">
+                                       <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <a *ngIf="simpleDocUrls.id_proof" [href]='baseImagePath+simpleDocUrls.id_proof' target="_blank">{{simpleDocUrls.id_proof_original}}</a>
+                                    <p *ngIf="!simpleDocUrls.id_proof || !id_proof.valid" style="color: red">This field is required!</p>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <textarea style="width:100%;resize:none;" id="id_proof_txt" class="form-control" rows="1" placeholder="write your comments..."  [(ngModel)]="fileContent.id_proof_txt" name="id_proof_txt" #id_proof_txt="ngModel" placeholder="Description"></textarea>
+                                    </div>
+                                 </div>
+								 <div *ngIf="docloader[1]" class='thisloader'>
+									<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+									  <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+										s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+										c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"></path>
+									  <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+										C22.32,8.481,24.301,9.057,26.013,10.047z" transform="rotate(293.896 20 20)">
+										<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"></animateTransform>
+										</path>
+									</svg>
+								 </div>
+                              </div>
+                              <div>
+								<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.id_proof || !id_proof.valid) else other_content4">
+									<img src="../assets/image/notyetuploaded.png"/> Not yet Uploaded
+								</div>
+								<ng-template #other_content4>
+									<div  class="uploaded-text" *ngIf="(!simpleDocUrls.id_proof) else other_content5">
+										<!-- <img src="../assets/image/uploaded.png"/> uploading... -->
+									</div>
+									<ng-template #other_content5>
+										<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.doc_verified) else other_content6">
+											<div class="Not-yet-verified-text">
+												<img src="../assets/image/Notyetverified.png" width="9" height="17"/> Not yet verified	
+											</div>
+										</div>
+										<ng-template #other_content6>
+											<div class="verified-text">
+												<img src="../assets/image/verified.png" width="20" height="12"/> Verified	
+											</div>
+										</ng-template>									
+									</ng-template>									
+								</ng-template>                                 
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="verified">
+                              <div class="verified-box clearfix">
+                                 <div class="col-md-9">
+                                    <h4><i class="fa fa-file-text-o" aria-hidden="true"></i> &nbsp;ID Proof 2 </h4>
+									<!-- Contract Tooth Fairy -->
+                                 </div>
+                                 <div class="col-md-3 text-right">
+                                    <div class="btn-bs-file btn-attachment">
+                                       <input (change)='readUrlFromDoc($event, 2)' class="hide_file" requireFile type="file" id="id_proof_2" [ngModel]="fileContent.id_proof_2" name="id_proof_2" #id_proof_2="ngModel" placeholder="Upload file" accept=".pdf">
+                                       <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <a *ngIf="simpleDocUrls.id_proof_2" [href]='baseImagePath+simpleDocUrls.id_proof_2' target="_blank">{{simpleDocUrls.id_proof_2_original}}</a>
+                                    <p *ngIf="!simpleDocUrls.id_proof_2 || !id_proof_2.valid" style="color: red">This field is required!</p>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <textarea style="width:100%;resize:none;" class="form-control" rows="1" placeholder="write your comments..." id="id_proof_2_txt" [(ngModel)]="fileContent.id_proof_2_txt" name="id_proof_2_txt" #id_proof_2_txt="ngModel"></textarea>
+                                    </div>
+                                 </div>
+								 <div *ngIf="docloader[2]" class='thisloader'>
+									<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+									  <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+										s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+										c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"></path>
+									  <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+										C22.32,8.481,24.301,9.057,26.013,10.047z" transform="rotate(293.896 20 20)">
+										<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"></animateTransform>
+										</path>
+									</svg>
+								 </div>
+                              </div>
+                              <div>
+								<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.id_proof_2 || !id_proof_2.valid) else other_content7">
+									<img src="../assets/image/notyetuploaded.png"/> Not yet Uploaded
+								</div>
+								<ng-template #other_content7>
+									<div  class="uploaded-text" *ngIf="(!simpleDocUrls.id_proof_2) else other_content8">
+										<!-- <img src="../assets/image/uploaded.png"/> uploading... -->
+									</div>
+									<ng-template #other_content8>
+										<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.doc_verified) else other_content9">
+											<div class="Not-yet-verified-text">
+												<img src="../assets/image/Notyetverified.png" width="9" height="17"/> Not yet verified	
+											</div>
+										</div>
+										<ng-template #other_content9>
+											<div class="verified-text">
+												<img src="../assets/image/verified.png" width="20" height="12"/> Verified	
+											</div>
+										</ng-template>				
+									</ng-template>							
+								</ng-template>                             
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="verified">
+                              <div class="verified-box clearfix">
+                                 <div class="col-md-9">
+                                    <h4><i class="fa fa-file-text-o" aria-hidden="true"></i> &nbsp; GDC Document </h4>
+									<!-- Occupational Health -->
+                                 </div>
+                                 <div class="col-md-3 text-right">
+                                    <div class="btn-bs-file btn-attachment">
+                                       <input (change)='readUrlFromDoc($event, 3)' class="hide_file" requireFile type="file" id="gdc_doc" [ngModel]="fileContent.gdc_doc" name="gdc_doc" #gdc_doc="ngModel" placeholder="Upload file" accept=".pdf">
+                                       <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <a *ngIf="simpleDocUrls.gdc_doc" [href]='baseImagePath+simpleDocUrls.gdc_doc' target="_blank">{{simpleDocUrls.gdc_doc_original}}</a>
+                                    <p *ngIf="!simpleDocUrls.gdc_doc || !gdc_doc.valid" style="color: red">This field is required!</p>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <textarea style="width:100%;resize:none;" class="form-control" rows="1" placeholder="write your comments..." id="gdc_doc_txt" [(ngModel)]="fileContent.gdc_doc_txt" name="gdc_doc_txt" #gdc_doc_txt="ngModel"></textarea>
+                                    </div>
+                                 </div>
+								 <div *ngIf="docloader[3]" class='thisloader'>
+									<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+									  <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+										s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+										c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"></path>
+									  <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+										C22.32,8.481,24.301,9.057,26.013,10.047z" transform="rotate(293.896 20 20)">
+										<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"></animateTransform>
+										</path>
+									</svg>
+								 </div>
+                              </div>
+                              <div>
+								<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.gdc_doc || !gdc_doc.valid) else other_content10">
+									<img src="../assets/image/notyetuploaded.png"/> Not yet Uploaded
+								</div>
+								<ng-template #other_content10>
+									<div  class="uploaded-text" *ngIf="(!simpleDocUrls.gdc_doc) else other_content11">
+										<!-- <img src="../assets/image/uploaded.png"/> uploading... -->
+									</div>
+									<ng-template #other_content11>
+										<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.doc_verified) else other_content12">
+											<div class="Not-yet-verified-text">
+												<img src="../assets/image/Notyetverified.png" width="9" height="17"/> Not yet verified	
+											</div>
+										</div>
+										<ng-template #other_content12>
+											<div class="verified-text">
+												<img src="../assets/image/verified.png" width="20" height="12"/> Verified	
+											</div>
+										</ng-template>									
+									</ng-template>									
+								</ng-template>                                 
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="verified">
+                              <div class="verified-box clearfix">
+                                 <div class="col-md-9">
+                                    <h4><i class="fa fa-file-text-o" aria-hidden="true"></i> &nbsp; CRB/DBS Certificate   </h4>
+                                 </div>
+                                 <div class="col-md-3 text-right">
+                                    <div class="btn-bs-file btn-attachment">
+                                       <input (change)='readUrlFromDoc($event, 4)' class="hide_file" requireFile type="file" id="crb_dbs_doc" [ngModel]="fileContent.crb_dbs_doc" name="crb_dbs_doc" #crb_dbs_doc="ngModel" placeholder="Upload file" accept=".pdf">
+                                       <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <a *ngIf="simpleDocUrls.crb_dbs_doc" [href]='baseImagePath+simpleDocUrls.crb_dbs_doc' target="_blank">{{simpleDocUrls.crb_dbs_doc_original}}</a>
+                                    <p *ngIf="!simpleDocUrls.crb_dbs_doc || !crb_dbs_doc.valid" style="color: red">This field is required!</p>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <textarea style="width:100%;resize:none;" class="form-control" rows="1" placeholder="write your comments..." id="crb_dbs_doc_txt" [(ngModel)]="fileContent.crb_dbs_doc_txt" name="crb_dbs_doc_txt" #crb_dbs_doc_txt="ngModel" placeholder="Description"></textarea>
+                                    </div>
+                                 </div>
+								 <div *ngIf="docloader[4]" class='thisloader'>
+									<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+									  <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+										s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+										c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"></path>
+									  <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+										C22.32,8.481,24.301,9.057,26.013,10.047z" transform="rotate(293.896 20 20)">
+										<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"></animateTransform>
+										</path>
+									</svg>
+								 </div>
+                              </div>
+                              <div>
+								<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.crb_dbs_doc || !crb_dbs_doc.valid) else other_content13">
+									<img src="../assets/image/notyetuploaded.png"/> Not yet Uploaded
+								</div>
+								<ng-template #other_content13>
+									<div  class="uploaded-text" *ngIf="(!simpleDocUrls.crb_dbs_doc) else other_content14">
+										<!-- <img src="../assets/image/uploaded.png"/> uploading... -->
+									</div>
+									<ng-template #other_content14>
+										<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.doc_verified) else other_content15">
+											<div class="Not-yet-verified-text">
+												<img src="../assets/image/Notyetverified.png" width="9" height="17"/> Not yet verified	
+											</div>
+										</div>
+										<ng-template #other_content15>
+											<div class="verified-text">
+												<img src="../assets/image/verified.png" width="20" height="12"/> Verified	
+											</div>
+										</ng-template>									
+									</ng-template>
+								</ng-template>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="verified">
+                              <div class="verified-box clearfix">
+                                 <div class="col-md-9">
+                                    <h4><i class="fa fa-file-text-o" aria-hidden="true"></i> &nbsp; Graduation Certificate   </h4>
+                                 </div>
+                                 <div class="col-md-3 text-right">
+                                    <div class="btn-bs-file btn-attachment">
+                                       <input (change)='readUrlFromDoc($event, 5)' class="hide_file" requireFile type="file" id="graduation_doc" [ngModel]="fileContent.graduation_doc" name="graduation_doc" #graduation_doc="ngModel" placeholder="Upload file" accept=".pdf">
+                                       <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <a *ngIf="simpleDocUrls.graduation_doc" [href]='baseImagePath+simpleDocUrls.graduation_doc' target="_blank">{{simpleDocUrls.graduation_doc_original}}</a>
+                                    <p *ngIf="!simpleDocUrls.graduation_doc || !graduation_doc.valid" style="color: red">This field is required!</p>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <textarea style="width:100%;resize:none;" class="form-control" rows="1" placeholder="write your comments..."  id="graduation_doc_txt" [(ngModel)]="fileContent.graduation_doc_txt" name="graduation_doc_txt" #graduation_doc_txt="ngModel" ></textarea>
+                                    </div>
+                                 </div>
+								 <div *ngIf="docloader[5]" class='thisloader'>
+									<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+									  <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+										s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+										c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"></path>
+									  <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+										C22.32,8.481,24.301,9.057,26.013,10.047z" transform="rotate(293.896 20 20)">
+										<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"></animateTransform>
+										</path>
+									</svg>
+								 </div>
+                              </div>
+                              <div>
+								<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.graduation_doc || !graduation_doc.valid) else other_content16">
+									<img src="../assets/image/notyetuploaded.png"/> Not yet Uploaded
+								</div>
+								<ng-template #other_content16>
+									<div  class="uploaded-text" *ngIf="(!simpleDocUrls.graduation_doc) else other_content17">
+										<!-- <img src="../assets/image/uploaded.png"/> uploading... -->
+									</div>
+									<ng-template #other_content17>
+										<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.doc_verified) else other_content18">
+											<div class="Not-yet-verified-text">
+												<img src="../assets/image/Notyetverified.png" width="9" height="17"/> Not yet verified	
+											</div>
+										</div>
+										<ng-template #other_content18>
+											<div class="verified-text">
+												<img src="../assets/image/verified.png" width="20" height="12"/> Verified	
+											</div>
+										</ng-template>
+									</ng-template>							
+								</ng-template>                             
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="verified">
+                              <div class="verified-box clearfix">
+                                 <div class="col-md-9">
+                                    <h4><i class="fa fa-file-text-o" aria-hidden="true"></i> &nbsp; Bank Details  </h4>
+                                 </div>
+                                 <div class="col-md-3 text-right">
+                                    <div class="btn-bs-file btn-attachment">
+                                       <input (change)='readUrlFromDoc($event, 6)' class='hide_file' requireFile type="file" id="bank_details" [ngModel]="fileContent.bank_details" name="bank_details" #bank_details="ngModel" placeholder="Upload file" accept=".pdf">
+                                       <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <a *ngIf="simpleDocUrls.bank_details" [href]='baseImagePath+simpleDocUrls.bank_details' target="_blank">{{simpleDocUrls.bank_details_original}}</a>
+                                    <p *ngIf="!simpleDocUrls.bank_details || !bank_details.valid" style="color: red">This field is required!</p>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <textarea style="width:100%;resize:none;" class="form-control" rows="1" placeholder="write your comments..."  id="bank_details_txt" [(ngModel)]="fileContent.bank_details_txt" name="bank_details_txt" #bank_details_txt="ngModel" ></textarea>
+                                    </div>
+                                 </div>
+								 <div *ngIf="docloader[6]" class='thisloader'>
+									<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+									  <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+										s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+										c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"></path>
+									  <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+										C22.32,8.481,24.301,9.057,26.013,10.047z" transform="rotate(293.896 20 20)">
+										<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"></animateTransform>
+										</path>
+									</svg>
+								 </div>
+                              </div>
+                              <div>
+								<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.bank_details || !bank_details.valid) else other_content19">
+									<img src="../assets/image/notyetuploaded.png"/> Not yet Uploaded
+								</div>
+								<ng-template #other_content19>
+									<div  class="uploaded-text" *ngIf="(!simpleDocUrls.bank_details) else other_content20">
+										<!-- <img src="../assets/image/uploaded.png"/> uploading... -->
+									</div>
+									<ng-template #other_content20>
+										<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.doc_verified) else other_content21">
+											<div class="Not-yet-verified-text">
+												<img src="../assets/image/Notyetverified.png" width="9" height="17"/> Not yet verified	
+											</div>
+										</div>
+										<ng-template #other_content21>
+											<div class="verified-text">
+												<img src="../assets/image/verified.png" width="20" height="12"/> Verified	
+											</div>
+										</ng-template>									
+									</ng-template>									
+								</ng-template>                                 
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="verified">
+                              <div class="verified-box clearfix">
+                                 <div class="col-md-9">
+                                    <h4><i class="fa fa-file-text-o" aria-hidden="true"></i> &nbsp; Child Protection  </h4>
+                                 </div>
+                                 <div class="col-md-3 text-right">
+                                    <div class="btn-bs-file btn-attachment">
+                                       <input (change)='readUrlFromDoc($event, 7)' class='hide_file' requireFile type="file" id="child_protection" [ngModel]="fileContent.child_protection" name="child_protection" #child_protection="ngModel" placeholder="Upload file" accept=".pdf">
+                                       <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <a *ngIf="simpleDocUrls.child_protection" [href]='baseImagePath+simpleDocUrls.child_protection' target="_blank">{{simpleDocUrls.child_protection_original}}</a>
+                                    <p *ngIf="!simpleDocUrls.child_protection || !child_protection.valid" style="color: red">This field is required!</p>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <textarea style="width:100%;resize:none;" id="child_protection_txt" class="form-control" rows="1" placeholder="write your comments..." [(ngModel)]="fileContent.child_protection_txt" name="child_protection_txt" #child_protection_txt="ngModel"></textarea>
+                                    </div>
+                                 </div>
+								 <div *ngIf="docloader[7]" class='thisloader'>
+									<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+									  <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+										s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+										c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"></path>
+									  <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+										C22.32,8.481,24.301,9.057,26.013,10.047z" transform="rotate(293.896 20 20)">
+										<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"></animateTransform>
+										</path>
+									</svg>
+								 </div>
+                              </div>
+                              <div>
+								<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.child_protection || !child_protection.valid) else other_content22">
+									<img src="../assets/image/notyetuploaded.png"/> Not yet Uploaded
+								</div>
+								<ng-template #other_content22>
+									<div  class="uploaded-text" *ngIf="(!simpleDocUrls.child_protection) else other_content23">
+										<!-- <img src="../assets/image/uploaded.png"/> uploading... -->
+									</div>
+									<ng-template #other_content23>
+										<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.doc_verified) else other_content24">
+											<div class="Not-yet-verified-text">
+												<img src="../assets/image/Notyetverified.png" width="9" height="17"/> Not yet verified	
+											</div>
+										</div>
+										<ng-template #other_content24>
+											<div class="verified-text">
+												<img src="../assets/image/verified.png" width="20" height="12"/> Verified	
+											</div>
+										</ng-template>									
+									</ng-template>									
+								</ng-template>                                 
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="verified">
+                              <div class="verified-box clearfix">
+                                 <div class="col-md-9">
+                                    <h4><i class="fa fa-file-text-o" aria-hidden="true"></i> &nbsp; Adult Safeguarding  </h4>
+                                 </div>
+                                 <div class="col-md-3 text-right">
+                                    <div class="btn-bs-file btn-attachment">
+                                       <input (change)='readUrlFromDoc($event, 8)' class='hide_file' requireFile type="file" id="adult_safeguarding" [ngModel]="fileContent.adult_safeguarding" name="adult_safeguarding" #adult_safeguarding="ngModel" placeholder="Upload file" accept=".pdf">
+                                       <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <a *ngIf="simpleDocUrls.adult_safeguarding" [href]='baseImagePath+simpleDocUrls.adult_safeguarding' target="_blank">{{simpleDocUrls.adult_safeguarding_original}}</a>
+                                    <p *ngIf="!simpleDocUrls.adult_safeguarding || !adult_safeguarding.valid" style="color: red">This field is required!</p>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <textarea style="width:100%;resize:none;" class="form-control" rows="1" placeholder="write your comments..." id="adult_safeguarding_txt" [(ngModel)]="fileContent.adult_safeguarding_txt" name="adult_safeguarding_txt" #adult_safeguarding_txt="ngModel"></textarea>
+                                    </div>
+                                 </div>
+								 <div *ngIf="docloader[8]" class='thisloader'>
+									<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+									  <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+										s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+										c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"></path>
+									  <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+										C22.32,8.481,24.301,9.057,26.013,10.047z" transform="rotate(293.896 20 20)">
+										<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"></animateTransform>
+										</path>
+									</svg>
+								 </div>
+                              </div>
+                              <div>
+								<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.adult_safeguarding || !adult_safeguarding.valid) else other_content25">
+									<img src="../assets/image/notyetuploaded.png"/> Not yet Uploaded
+								</div>
+								<ng-template #other_content25>
+									<div  class="uploaded-text" *ngIf="(!simpleDocUrls.adult_safeguarding) else other_content26">
+										<!-- <img src="../assets/image/uploaded.png"/> uploading... -->
+									</div>
+									<ng-template #other_content26>
+										<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.doc_verified) else other_content27">
+											<div class="Not-yet-verified-text">
+												<img src="../assets/image/Notyetverified.png" width="9" height="17"/> Not yet verified	
+											</div>
+										</div>
+										<ng-template #other_content27>
+											<div class="verified-text">
+												<img src="../assets/image/verified.png" width="20" height="12"/> Verified	
+											</div>
+										</ng-template>									
+									</ng-template>									
+								</ng-template>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="verified">
+                              <div class="verified-box clearfix">
+                                 <div class="col-md-9">
+                                    <h4><i class="fa fa-file-text-o" aria-hidden="true"></i> &nbsp; ToothFairy Signed </h4>
+                                 </div>
+                                 <div class="col-md-3 text-right">
+                                    <div class="btn-bs-file btn-attachment">
+                                       <input (change)='readUrlFromDoc($event, 9)' class='hide_file' requireFile type="file" id="tooth_fairy_signed" [ngModel]="fileContent.tooth_fairy_signed" name="tooth_fairy_signed" #tooth_fairy_signed="ngModel" placeholder="Upload file" accept=".pdf">
+                                       <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <a *ngIf="simpleDocUrls.tooth_fairy_signed" [href]='baseImagePath+simpleDocUrls.tooth_fairy_signed' target="_blank">{{simpleDocUrls.tooth_fairy_signed_original}}</a>
+                                    <p *ngIf="!simpleDocUrls.tooth_fairy_signed || !tooth_fairy_signed.valid" style="color: red">This field is required!</p>
+                                 </div>
+                                 <div class="col-md-12">
+                                    <div class="form-group">
+                                       <textarea style="width:100%;resize:none;" class="form-control" rows="1" placeholder="write your comments..." id="tooth_fairy_signed_txt" [(ngModel)]="fileContent.tooth_fairy_signed_txt" name="tooth_fairy_signed_txt" #tooth_fairy_signed_txt="ngModel"></textarea>
+                                    </div>
+                                 </div>
+								 <div *ngIf="docloader[9]" class='thisloader'>
+									<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+									  <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+										s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+										c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"></path>
+									  <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+										C22.32,8.481,24.301,9.057,26.013,10.047z" transform="rotate(293.896 20 20)">
+										<animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"></animateTransform>
+										</path>
+									</svg>
+								 </div>
+                              </div>
+							   <div>
+								<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.tooth_fairy_signed || !tooth_fairy_signed.valid) else other_content28">
+									<img src="../assets/image/notyetuploaded.png"/> Not yet Uploaded
+								</div>
+								<ng-template #other_content28>
+									<div  class="uploaded-text" *ngIf="(!simpleDocUrls.tooth_fairy_signed) else other_content29">
+										<!-- <img src="../assets/image/uploaded.png"/> uploading... -->
+									</div>
+									<ng-template #other_content29>
+										<div class="Not-yet-Uploaded-text" *ngIf="(!simpleDocUrls.doc_verified) else other_content30">
+											<div class="Not-yet-verified-text">
+												<img src="../assets/image/Notyetverified.png" width="9" height="17"/> Not yet verified	
+											</div>
+										</div>
+										<ng-template #other_content30>
+											<div class="verified-text">
+												<img src="../assets/image/verified.png" width="20" height="12"/> Verified	
+											</div>
+										</ng-template>									
+									</ng-template>									
+								</ng-template>
+                              </div>
+                           </div>
+                        </div>
+                        <span style="text-align: center;color: #a94442">{{errorMsg}}</span>
+                        <!-- (!simpleDocUrls.tooth_fairy_signed || !simpleDocUrls.adult_safeguarding || !simpleDocUrls.child_protection || !simpleDocUrls.bank_details || !simpleDocUrls.id_proof || !simpleDocUrls.indemnity) ||  -->
+                        <!-- <div class="col-md-12"> -->
+                        <!-- <div class="form-group btn-div text-right"> -->
+                           <!-- <button type="submit" class="btn btn-link" [disabled]="!spotForm.form.valid && (!simpleDocUrls.tooth_fairy_signed || !simpleDocUrls.adult_safeguarding || !simpleDocUrls.child_protection || !simpleDocUrls.bank_details || !simpleDocUrls.id_proof || !simpleDocUrls.id_proof_2 ||!simpleDocUrls.gdc_doc || !simpleDocUrls.indemnity || !simpleDocUrls.crb_dbs_doc || !simpleDocUrls.graduation_doc)">SAVE</button> -->
+                        <!-- </div> -->
+                        <!-- </div> -->
+                     </fieldset>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="panel panel-success" id="MyEarning-div">
+            <div class="panel-heading collapsed" data-toggle="collapse" data-parent=".i-accordion" href="#MyEarning" aria-expanded="false">
+               <h4 class="panel-title">My Earning<i class="fa fa-angle-down pull-right"></i></h4>
+            </div>
+            <div id="MyEarning" class="panel-collapse collapse" aria-expanded="false">
+               <div class="panel-body">
+                  <div class="pannel-border"></div>
+                  <div class="BasicDetail-div clearfix">
+                     <div class="clearfix"></div>
+                     <div class="panel-group i-accordion2">
+                        <div class="panel panel-success pannel-sucess-change" id="ThisMonth-div">
+                           <div class="panel-heading panel-heading-change collapsed" data-toggle="collapse" data-parent=".i-accordion2" href="#ThisMonth" aria-expanded="false">
+                              <h4 class="panel-title2 panel-titlechng">My Earning<i class="fa fa-angle-down pull-right"></i></h4>
+                           </div>
+                           <div id="ThisMonth" class="panel-collapse collapse" aria-expanded="false">
+                              <div class="panel-body">
+                                 <div class="pannel-border2"></div>
+                                 <div class="BasicDetail-div clearfix">
+                                    <div class="clearfix"></div>
+                                    <div class="list-shadow clearfix">
+                                       <div class="col-md-4 text-center no-padding">
+                                          <div class="ThisMonth-inner">
+                                             <div class="list">
+                                                <div class="list-heading">
+                                                   Booking Id
+                                                </div>
+                                                <div class="list-li">
+                                                   <ul class="list-unstyled Booking-list">
+                                                      <li>TF_123</li>
+                                                      <li>TF_123</li>
+                                                      <li>TF_123</li>
+                                                   </ul>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-4 text-center no-padding">
+                                          <div class="ThisMonth-inner">
+                                             <div class="list">
+                                                <div class="list-heading">
+                                                   Booking Id
+                                                </div>
+                                                <div class="list-li">
+                                                   <ul class="list-unstyled Booking-list">
+                                                      <li>TF_123</li>
+                                                      <li>TF_123</li>
+                                                      <li>TF_123</li>
+                                                   </ul>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-4 text-center no-padding">
+                                          <div class="ThisMonth-inner">
+                                             <div class="list">
+                                                <div class="list-heading">
+                                                   Booking Id
+                                                </div>
+                                                <div class="list-li">
+                                                   <ul class="list-unstyled Booking-list">
+                                                      <li>TF_123</li>
+                                                      <li>TF_123</li>
+                                                      <li>TF_123</li>
+                                                   </ul>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+</div>
+</section>
+</div>

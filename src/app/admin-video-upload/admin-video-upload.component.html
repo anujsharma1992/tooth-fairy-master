@@ -1,0 +1,51 @@
+<title>{{title}}</title>
+<app-admin-common-nav></app-admin-common-nav>
+<div class="loginWrapper">
+    <div *ngIf="loader" class="loaderCntr" style="display: block;">
+        <div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+    </div>
+    <div class="logincontainer">
+        <div class="row pad">
+            <a routerLink="create-spot" class="btn btn-primary" routerLink="/admin/videogallery" style="float:right;">Back</a>
+            <div class="col-md-4 col-md-offset-4"> <span class="error" style="text-align: center;display: block;"></span>
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading login" style="text-align: center;">
+                        <h3 class="panel-title">Upload Video</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div *ngIf="addFormError" class="alert alert-danger box-msg" role="alert"></div>
+                        <div *ngIf="sucMsgVal" class="spotFormCss alert-success" [innerHTML]="sucMsg"></div>
+					<form enctype="multipart/form-data" method="post" (ngSubmit)="videoUpoload()" #spotForm="ngForm" name="spotForm" novalidate>
+						<fieldset>
+							<div class="form-group">
+								<label>Video</label>
+								<input type="file" required multiple="multiple" id="file" placeholder="Upload file" accept=".mp4" >
+							</div>
+							<div class="form-group">
+								<input pattern=".*\S.*" required title="This field is required" [(ngModel)]="spot.title" class="form-control title" placeholder="Title" type="text" name="spot_title" #spot_title="ngModel">
+								<div [hidden]="spot_title.valid || spot_title.pristine" class="spotFormCss alert-danger">
+									Please enter title
+								</div>
+							</div>
+							<div class="form-group">
+								<input pattern=".*\S.*" required title="This field is required" [(ngModel)]="spot.firstName" class="form-control firstName" placeholder="Price" type="text" name="first_name" #first_name="ngModel">
+								<div [hidden]="first_name.valid || first_name.pristine" class="spotFormCss alert-danger">
+									price 
+								</div>
+							</div>
+							<div class="form-group">
+								<input pattern=".*\S.*" required title="This field is required" [(ngModel)]="spot.lastName" class="form-control lastName" placeholder="description" type="text" name="last_name" #last_name="ngModel"/>
+								<div [hidden]="last_name.valid || last_name.pristine" class="spotFormCss alert-danger">
+									Please enter last name
+								</div>
+							</div>
+							<span style="text-align: center;color: #a94442">{{errorMsg}}</span>
+							<button type="submit" class="btn btn-lg btn-success btn-block" [disabled]="!spotForm.form.valid">ADD</button>
+						</fieldset>
+					</form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

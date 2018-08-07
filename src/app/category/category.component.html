@@ -1,0 +1,47 @@
+<title>{{title}}</title>
+<app-admin-common-nav></app-admin-common-nav>
+<div class="container-fluid">
+<div *ngIf="loader" class="loaderCntr" style="display: block;">
+	<div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+</div>
+	<div class="content-wrapper appointment-wrapper">
+	<section class='content'>
+		<div class="appointment-div clearfix">
+			  <div class="col-md-8">
+				 <h2>Previous Appoinment</h2>  
+			  </div>
+			  <div class="col-md-4 sortby text-right">
+				<ul class="nav navbar-nav navbar-right">
+				  <li class="dropdown">
+						<input type="text" [(ngModel)]="searchText" (input)='keyupfunction()' placeholder="Search video" class="form-control" id="search">
+				  </li>
+				</ul>
+			  </div>
+			  <div class="clearfix"></div>
+			  <div class="col-md-12">
+			  <div class="border-heading"></div>
+			  </div>
+			  <div class="col-md-12" *ngFor='let item of nearByClinics;let i=index;'>
+				  <div class="list-appointment clearfix">
+					<div class="list-appointment-person">
+					<img *ngIf='item.img1' src="{{item.img1?basePathimage+item.img1:'../assets/image/user8-128x128.jpg'}}" />
+					</div>
+					<div class="list-appointment-text">
+					   <h5>Booking ID : TF-{{item.id}}</h5>
+					   <p>Doctor : {{item.dfname+" "+item.dlname}}</p>
+					   <p>Patient : {{item.ufname+" "+item.ulname}}</p>
+					</div>
+					<div class="date-time">
+					 {{item.booking_time | date:'fullDate'}} T {{item.booking_time.split('T')[1].split('Z')[0].split('.')[0]}}
+					</div>
+					<a  [routerLink]="['details', {uid:item.uid,booking_id:item.id }]" [routerLinkActive]="['active']" class="list-appointment-view">
+						<i class="fa fa-eye" aria-hidden="true"></i> &nbsp; View
+					</a>
+				  </div>
+			  </div>
+			  
+  <app-pagination [offset]="offset" [limit]="limit" [size]="count" (pageChange)="onPageChange($event)"></app-pagination>
+			</div>
+			</section>
+		</div>
+</div>

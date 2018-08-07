@@ -1,0 +1,444 @@
+<title>{{title}}
+</title>
+<app-common-nav></app-common-nav>
+<router-outlet></router-outlet>
+<div class="container-fluid background-container">
+<div *ngIf="loader" class="loaderCntr" style="display: block;">
+	<div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+</div>
+
+ <div  *ngIf="timeshowhide2" class="content-wrapper video-wrapper clearfix">
+<!-- <video-call-widget [sessionId]="sessionId" [token]="token"></video-call-widget> -->
+ <section class="content clearfix">
+     <div class="video-wrapper-content clearfix">
+     <div class="col-md-12">
+	    <div class="col-md-12 text-center">
+		   <h1>Going on call</h1>
+		</div>
+	    <div class="col-md-8">
+		   <h2>Booking id: TF12345</h2>
+		   <div class="video-call" style="background:#fff;box-shadow: 0px 15px 28px 0px rgba(0, 0, 0, 0.09);">
+		      <div style='height:398px;position:relative;' id="videos">
+				<div style='height: 20%;width: 20%;position: relative;right: 0px;float: left;z-index: 999;' id="publisher"></div>
+				<div style='width:100%;height:100%;background:#000;position:absolute;'  id="subscriber"></div>
+			  </div>
+		   </div>
+		</div>
+		<div class="col-md-4 video-section">
+		   <h2 class="pull-left">Checklist</h2>
+		   <div class="tick-icon pull-right">
+		   <img src="../assets/image/tick.png" width="22" height="16"/>
+		   </div>
+		   <div class="clearfix"></div>
+		   <div class="border-heading"></div>
+		   <div class="checklist-div jspScrollable scroll-pane">
+		   <div class="checklist-div-inner-gap">
+		      <div *ngFor="let listitem of doctorCheckList; let i = index;" class="checklist-box">
+				   <span><input type="checkbox" class="tt-input" [attr.checklistid]='listitem.id' [id]="'first'+i" value="on">
+                   <label [attr.for]="'first'+i"><h5>{{listitem.heading}} </h5>
+					<p>{{listitem.description}}</p></label></span>
+			  </div>
+		   </div>
+		   </div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="col-md-4 video-section">
+			<h2>Patient’s Detail</h2>
+			<div class="clearfix"></div>
+			<div class="border-heading"></div>
+			<div class="Patient-Detail jspScrollable scroll-pane clearfix">
+			<div *ngIf='getPatientDetailsObj' class="Patient-Detail-inner-gap">
+			    <div class="user-div">
+					<div  class="user-img">
+					  <img src="{{getPatientDetailsObj.photo_url?baseImagePath+getPatientDetailsObj.photo_url:'assets/image/user8-128x128.jpg'}}"  width="60" height="60" class="img-circle"/>
+					</div>
+					<div class="user-name">
+					  <h6>{{getPatientDetailsObj.nameTitle+" "+getPatientDetailsObj.firstName+" "+getPatientDetailsObj.lastName}}</h6>
+					  <p>{{getPatientDetailsObj.address}}</p>
+					</div>
+				</div>
+				<div class="border-heading"></div>
+				<div class="user-div">
+				     <h6>Date of Birth</h6>
+					  <p>{{getPatientDetailsObj.dateOfBirth}}</p>
+				</div>
+				<div class="border-heading"></div>
+				<div class="user-div">
+				     <h6>Sex</h6>
+					  <p>{{getPatientDetailsObj.gender=='m'?'male':'female'}}</p>
+				</div>
+				<div class="border-heading"></div>
+				<div class="user-div">
+				     <h6>Email</h6>
+					  <p>{{getPatientDetailsObj.email}}</p>
+				</div>
+				<div class="border-heading"></div>
+			</div>
+			</div>
+		</div>
+		<div class="col-md-4 video-section">
+		    <h2>Patient’s History</h2>
+			<div class="clearfix"></div>
+			<div class="border-heading"></div>
+		    <div class="Patient-History jspScrollable scroll-pane clearfix">
+				<div class="Patient-History-inner-gap clearfix">
+                   <div *ngFor="let itemx of getPatientMedicalHistoryObj; let i=index;" class="Patient-History-div">
+				       <h6>{{itemx.question}}</h6>
+					   <div class="col-md-6 btn-gap">
+					      <button type="button" class="btn btn-info btn-block" [ngClass]= "itemx.answer=='Yes'?'active':''"> 
+						   <div class="icon-h">
+						     <i class="fa fa-check" aria-hidden="true"></i>
+						   </div>Yes</button>
+					   </div>
+					   <div class="col-md-6 btn-gap">
+					      <button type="button" [ngClass]= "itemx.answer=='No'?'active':''" class="btn btn-info btn-block">
+                           <div class="icon-h">
+						     <i class="fa fa-times" aria-hidden="true"></i>
+						   </div>No</button>
+					   </div>
+                        <div class="col-md-12 no-padding">					    
+						<p>{{itemx.desc}}</p>
+						</div>
+				   </div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 video-section">
+		   <h2>Complaint form</h2>
+			<div class="clearfix"></div>
+			<div class="border-heading"></div>
+	        <div class="Complaint-form jspScrollable scroll-pane clearfix">
+			<div *ngIf='getBookingDetailsObj' class="Complaint-form-inner-gap">
+				<div *ngFor="let itemy of complaint_form;let i = index" class="Complaint-form-div">
+				     <h6>{{itemy.ques}}</h6>
+					  <p>{{itemy.answer}}</p>
+				</div>
+			</div>
+			</div>		
+		</div>
+		<div class="col-md-8 video-section">
+		   <h2>Doctor Notes</h2>
+			<div class="clearfix"></div>
+			<div class="border-heading"></div>
+	        <div class="Doctor-Notes clearfix">
+			<div class="Doctor-Notes-inner-gap">
+                <div class="form-group">
+				   <textarea name="your-message" [(ngModel)]="notes_text" class="form-control" rows="3" aria-invalid="false" placeholder="write something here" required="" data-gramm="true" data-txt_gramm_id="013ca056-1497-1939-266c-157af4d0ddde" data-gramm_id="013ca056-1497-1939-266c-157af4d0ddde" spellcheck="false" data-gramm_editor="true"></textarea>
+				</div>
+				<div class="notes-div">
+				   <ul *ngIf='notesList' class="list-unstyled">        
+					   <li *ngFor="let itemx of notesList;">
+					   {{itemx.notes}}
+					   </li>
+					</ul>
+				</div>
+			</div>
+			</div>	
+            <div class="col-md-12 text-right no-padding doctor-btn">
+              <button type="button" (click)="insertNotes(booking_id)" class="btn btn-default">Save</button>
+			</div>			
+		</div>
+		<div class="col-md-4 video-section">
+		   <h2>Patient's Notes</h2>
+			<div class="clearfix"></div>
+			<div class="border-heading"></div>
+	        <div class="Patient-Attachments clearfix">
+			<div *ngIf='getBookingDetailsObj' class="tz-gallery">
+				<div *ngIf='getBookingDetailsObj[0].img1' class="col-md-4 gallery-gap">
+				   <div  class="gallery-img">
+					   <a class="lightbox" [href]="baseImagePath+getBookingDetailsObj[0].img1">
+						<img class="img-responsive" [src]="baseImagePath+getBookingDetailsObj[0].img1"> 
+						<div class="zoom">
+						<img src="assets/image/zoom.png" width="25" height="25" />
+						</div>
+					   </a>
+				   </div>
+				</div> 
+				<div *ngIf='getBookingDetailsObj[0].img2' class="col-md-4 gallery-gap">
+				   <div  class="gallery-img">
+				   <a class="lightbox" [href]="baseImagePath+getBookingDetailsObj[0].img2">
+					<img class="img-responsive" [src]="baseImagePath+getBookingDetailsObj[0].img2">
+					<div class="zoom">
+					<img src="assets/image/zoom.png" width="25" height="25" />
+					</div>
+				   </a>
+				   </div>
+				</div>
+				<div *ngIf='getBookingDetailsObj[0].img3' class="col-md-4 gallery-gap">
+				   <div class="gallery-img">
+				   <a class="lightbox" [href]="baseImagePath+getBookingDetailsObj[0].img3">
+					<img class="img-responsive" [src]="baseImagePath+getBookingDetailsObj[0].img3">
+					<div class="zoom">
+					<img src="assets/image/zoom.png" width="25" height="25" />
+					</div>
+				   </a>
+				   </div>
+				</div> 
+			</div>
+			</div>		
+		</div>
+		<div class="clearfix"></div>
+		<div *ngIf='!patientNotesShowHide'>
+			<div class="col-md-8 video-section">
+			  <h2>Patient’s Notes</h2>
+			  <div class="clearfix"></div>
+			  <div class="border-heading"></div>
+			 <div class="Patient-Notes clearfix">
+			   <div class="form-group">
+					<textarea [(ngModel)]='patientNotes' name="your-message" class="form-control" rows="5" aria-invalid="false" placeholder="write your comments..." required="" data-gramm="true" data-txt_gramm_id="013ca056-1497-1939-266c-157af4d0ddde" data-gramm_id="013ca056-1497-1939-266c-157af4d0ddde" spellcheck="false" data-gramm_editor="true"></textarea>
+			   </div>
+			 </div>
+			</div>
+			<div class="col-md-4 video-section">
+			   <h2>Patient's Prescription</h2>
+			   <div class="clearfix"></div>
+			   <div class="border-heading"></div>
+			   <div class="Patient-Prescription clearfix">
+				   <div class="Patient-Prescription-inner-gap clearfix">
+				   <div class='patient'>
+					<div class="col-md-6 Prescription-padding">
+                       <p>Prescription</p>
+                    </div>
+                    <div class="col-md-3 Prescription-padding">
+					  <p>Quantity</p> 
+					</div>
+					</div>
+					<div class='patient'>
+					<div class="col-md-6 Prescription-padding">
+                       <div class="form-group"> 
+                      <input class="form-control dynoprescription"/>
+                       </div>
+                    </div>
+                    <div class="col-md-3 Prescription-padding">
+                      <div class="form-group">
+                      <input class="form-control quantity"/>                    
+					  </div>
+					</div>
+					</div>
+					<div class="col-md-3 text-center Prescription-padding"> 
+                     <button (click)="addAnotherfield()" type="button" class="btn btn-block btn-link">Add</button> 
+                    </div>
+					
+					 <!-- <div class="tagtacular_basic red" id="tagtacular_3"></div> -->
+				   </div>
+			   </div>
+			</div>
+		</div>
+		<div id='patientNotesShowHide' class='text-center message-done' *ngIf="patientNotesShowHide">
+			pdf file is generated and email is sent with notes and prescription.
+		</div>
+		<div class="col-md-12 text-right video-section">
+		   <input type="submit" *ngIf='!patientNotesShowHide' data-toggle="modal" data-target="#myModal" (click)='sendandgeneratepdf()' class="btn btn-link" value="Send"/>
+		</div>
+	 </div>
+	 </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+<!-- *ngIf="false" -->
+
+
+<div *ngIf="!timeshowhide2 && !isVerifyVal" class="content-wrapper timmer-wrapper ">
+	 <div class="approval-div approvalbox  clearfix text-center">
+		<div class="approvalmiddle">	 
+		   <div *ngIf="checkWaitng else other_content" class="approval-content">
+			  <div class="approval-img">
+				 <img src="../assets/image/upload-certificate.png" width="150" height="150"/>
+			  </div>
+			  <div class="approval-text">
+				<h1> Upload Certificates</h1>
+				<p>go to my account > Professional certificates to upload your documents</p>
+			  </div>
+		   </div>
+		   <ng-template #other_content>
+		   <div class="approval-content">
+			  <div class="approval-img">
+				 <img src="../assets/image/waiting.png" width="150" height="150"/>
+			  </div>
+			  <div class="approval-text">
+				<h1>Waiting to approval...!</h1>
+				<p>you will receive an email from admin once your account is verified<br/> Thank you for uploading documents</p>
+			  </div>
+		   </div>
+		   </ng-template>	
+		</div>
+	</div>
+</div>
+
+
+<div *ngIf="!timeshowhide2 && isVerifyVal && timeshowhide" class="content-wrapper timmer-wrapper digital-wrapper">
+	 <div class="approval-div approvalbox clearfix text-center">
+		<div class="approvalmiddle">
+			<div class="timmer-div common-login-div clearfix">	
+				<div class="col-md-8 col-centered clearfix">
+				  <div class="col-md-12">
+					 <div class="welcome-back">
+					 <h1>Welcome Back,<span> {{vendorDetail.title +" "+vendorDetail.firstName + " "+ vendorDetail.lastName }} </span></h1>
+					 <!-- <h2>You have new notifications</h2> -->
+					 </div>
+				  </div>
+				  <div class="col-md-8 col-sm-8 col-xs-12">
+					 <div class="timmer-bg unavailable-bg">
+						 <h3>Upcoming Appointment</h3>
+						 <div class="unavailable-div clearfix text-center">
+						 <div class="unavailable-img">
+						   <img src="../assets/image/unavailable.png" width="120" height="125" />
+						 </div>
+						 <div class="unavailable-text">
+						  <h4> Appointment unavailable </h4>
+						 </div>
+						 <div class="clearfix"></div>
+						 <div class="unavailable-note">
+						 You will be notified on new available appointment
+						 </div>
+						 </div>
+					 </div>
+				  </div>
+				  <div class="co-md-4 col-sm-4 col-xs-12">
+					  <div class="col-md-12 no-padding">
+						  <!-- //*ngIf="isUserOnline" -->
+						  <div class="online-time">
+							  <h5>Online Time</h5>
+							  <p>Today</p>
+							  <div class="text-center">
+							  <span id="remainingTime"><span class='hh_h'>00</span><span class='h_m hh'>h</span> <span class='clock-dot'>:</span><span class='mm_h'>00</span><span class='h_m mm'>mins</span>
+							  <!-- <span class='clock-dot'>:</span> -->
+							  <!-- <span class='ss_h'>00</span><span class='h_m ss'>sec</span> -->
+							  </span>
+							  </div>
+						  </div>
+						  <!-- <div *ngIf="!isUserOnline" class="online-time"> -->
+							  <!-- <h5>Become Online</h5> -->
+							  <!-- <p>Slide Button At</p> -->
+							  <!-- <div class="text-center"> -->
+								<!-- <p>Top Right Corner</p> -->
+							  <!-- </div> -->
+						  <!-- </div> -->
+					  </div>
+					  <div class="col-md-12 no-padding">
+						  <div class="appoinment">
+							<h5>Appoinment</h5>
+							<div class="select-appoinment">
+							   <div class="form-group">
+									<select (change)="getDateWiseAppointment(appoinmentSelect)" [(ngModel)]='appoinmentSelect' class="form-control icon-menu" name="today">
+										<option value="today">Today</option>
+										<option value="week">This week</option>
+										<option value="month">This month</option>
+										<option value="year">This year</option>
+										<option value="all">All</option>
+									</select>
+								</div>
+							</div>
+							<div class="total-number text-center">
+							   <span class="number">{{appointmentCount}}</span>
+							   <span class="text-n">Total</span>
+							</div>
+						  </div>
+					  </div>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div *ngIf="!timeshowhide2 && !timeshowhide" class="content-wrapper timmer-wrapper digital-wrapper ">
+	 <div class="approval-div approvalbox  clearfix text-center">
+		<div class="approvalmiddle">
+				<div class="timmer-div  common-login-div clearfix">	
+				<div class="col-md-8 col-centered clearfix">
+				  <div class="col-md-12">
+					 <div class="welcome-back">
+					 <h1>Welcome Back,<span> {{vendorDetail.title +" "+vendorDetail.firstName + " "+ vendorDetail.lastName }} </span></h1>
+					 <!-- <h2>You have new notifications</h2> -->
+					 </div>
+				  </div>
+					 <div  class="co-md-8 col-sm-8 col-xs-12">
+						 <div class="digital-time clearfix">	
+							<div class="">
+							  <div class="">
+								 <div class="timmer-bg">
+									 <h3>Upcoming Appointment wait for payment</h3>
+									 <div class="clock"></div>
+									 <div class="timmer-border">
+										 <div id="progressTimer"></div>
+									 </div>
+								 </div>
+							  </div>
+							</div>
+						 </div>
+					</div>
+					<div class="co-md-4 col-sm-4 col-xs-12">
+					  <div class="col-md-12 no-padding">
+						  <div class="online-time">
+							  <h5>Please Wait...</h5>
+							  <p>user payment is not done yet.</p>
+						  </div>
+					  </div>
+					  <div class="col-md-12 no-padding">
+						  <div class="appoinment">
+							<h5>Appoinment</h5>
+							<div class="select-appoinment">
+							   <div class="form-group">
+									<select (change)="getDateWiseAppointment(appoinmentSelect)" [(ngModel)]='appoinmentSelect' class="form-control icon-menu" name="today">
+										<option value="today">Today</option>
+										<option value="week">-This week</option>
+										<option value="month">-This month</option>
+										<option value="year">-This year</option>
+										<option value="all">-All</option>
+									</select>
+								</div>
+							</div>
+							<div class="total-number text-center">
+							   <span class="number">{{appointmentCount}}</span>
+							   <span class="text-n">Total</span>
+							</div>
+						  </div>
+					  </div>
+				  </div>
+				</div>
+			 </div>
+		</div>
+	</div>
+</div>
+
+
+
+
+</div>
+<button type='checkbox' (click)='xyz(true)'> select me </button>
+<div class="modal fade model-section" id="myModal" role="dialog">
+<div class="model-loginwrap">
+  <div class="modal-dialog model-login-center">
+    <!-- Modal content-->
+    <div class="modal-content clearfix">
+   <div class="modal-header text-center">
+     Review<button type="button" class="close" data-dismiss="modal">×</button>
+   </div>
+   <div class="modal-body clearfix">
+     <div class="col-md-12">
+    <h2>My Comments</h2>
+    <div class="clearfix"></div>
+    <div class="border-heading"></div>
+    <div class="info-model">
+       <p>{{patientNotes}}</p>
+    </div>
+    <div class="Prescription-list">
+       <h2>Prescription</h2>
+       <div class="clearfix"></div>
+       <div class="border-heading"></div>
+       <ul  class="Prescription-li">
+
+       </ul>
+    </div>
+     </div>
+		<div class="text-center btn-send">
+		<input type="submit" data-dismiss="modal" [disabled]='patientNotesShowHide' (click)='apiCalltoGeneratePdf()' class="btn btn-link" value="Send"/>
+        </div>
+   </div>
+    </div> 
+  </div>
+</div>
+</div>
+

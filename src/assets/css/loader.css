@@ -1,0 +1,181 @@
+@font-face {
+	font-family: UdemyIcons;
+	src: url(../fonts/UdemyIcons.woff2) format("woff2"), url(../fonts/UdemyIcons.ttf) format("truetype"), url(../fonts/UdemyIcons.woff) format("woff");
+	font-weight: 400;
+	font-style: normal
+}
+.udi {
+	font-family: UdemyIcons!important;
+	speak: none !important;
+	font-style: normal;
+	font-weight: 400;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale
+}
+.loading-screen {
+	-webkit-transition: all .8s ease;
+	-moz-transition: all .8s ease;
+	-ms-transition: all .8s ease;
+	-o-transition: all .8s ease;
+	transition: all .8s ease;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #232c3b;
+	z-index: 1011;
+	display: block;
+	opacity: 1
+}
+.loading-screen.show, .loading-screen .show-add.show-add-active {
+	display: block;
+	opacity: 1
+}
+.loading-screen.show-remove.show-remove-active {
+	display: block;
+	opacity: 0
+}
+.loading-screen--white {
+	background-color: hsla(0,0%,100%,.6)
+}
+.preloader--lg {
+	font-size: 60px;
+	height: 60px
+}
+.preloader--md {
+	font-size: 30px;
+	height: 30px
+}
+.preloader--sm {
+	font-size: 15px;
+	height: 15px
+}
+.preloader--center {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	line-height: 0
+}
+.preloader--center.preloader--lg {
+	margin-top: -30px;
+	margin-left: -30px
+}
+.preloader--center.preloader--md {
+	margin-top: -15px;
+	margin-left: -15px
+}
+.preloader--center.preloader--sm {
+	margin-top: -7px;
+	margin-left: -7px
+}
+.preloader--fixed {
+	z-index: 1010;
+	content: "";
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(24,33,47,.8)
+}
+.preloader--fixed .preloader--inner {
+	position: absolute;
+	color: #fff;
+	top: 50%;
+	width: 100%;
+	text-align: center;
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	transform: translateY(-50%)
+}
+.preloader--fixed .preloader--inner .preloader--desc {
+	line-height: 20px;
+	font-size: 18px;
+	color: #fff;
+	text-align: center;
+	padding-top: 15px;
+	width: 100%
+}
+.icon-spin {
+	-ms-animation: spin 1s infinite linear;
+	-o-animation: spin 1s infinite linear;
+	-webkit-animation: spin 1s infinite linear;
+	-moz-animation: spin 1s infinite linear;
+	animation: spin 1s infinite linear;
+	text-decoration: none
+}
+.icon-spin, .loader {
+	display: inline-block
+}
+@-moz-keyframes spin {
+0% {
+-webkit-transform:rotate(0deg);
+-ms-transform:rotate(0deg);
+-o-transform:rotate(0deg);
+transform:rotate(0deg)
+}
+to {
+	-webkit-transform: rotate(1turn);
+	-ms-transform: rotate(1turn);
+	-o-transform: rotate(1turn);
+	transform: rotate(1turn)
+}
+}
+@-webkit-keyframes spin {
+0% {
+-webkit-transform:rotate(0deg);
+-ms-transform:rotate(0deg);
+-o-transform:rotate(0deg);
+transform:rotate(0deg)
+}
+to {
+	-webkit-transform: rotate(1turn);
+	-ms-transform: rotate(1turn);
+	-o-transform: rotate(1turn);
+	transform: rotate(1turn)
+}
+}
+@keyframes spin {
+0% {
+-webkit-transform:rotate(0deg);
+-ms-transform:rotate(0deg);
+-o-transform:rotate(0deg);
+transform:rotate(0deg)
+}
+to {
+	-webkit-transform: rotate(1turn);
+	-ms-transform: rotate(1turn);
+	-o-transform: rotate(1turn);
+	transform: rotate(1turn)
+}
+}
+.udi-circle-loader {
+	-ms-animation: spin 1.5s infinite linear;
+	-o-animation: spin 1.5s infinite linear;
+	-webkit-animation: spin 1.5s infinite linear;
+	-moz-animation: spin 1.5s infinite linear;
+	animation: spin 1.5s infinite linear;
+	display: inline-block
+}
+.udi-large {
+	font-size: 64px
+}
+.udi-medium {
+	font-size: 32px
+}
+.udi-small {
+	font-size: 16px
+}
+.udi {
+	vertical-align: -8%
+}
+.udi-circle-loader:before {
+	content: "\E779"
+}

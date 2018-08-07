@@ -1,0 +1,115 @@
+<title>{{title}}</title>
+<app-common-nav></app-common-nav>
+<div id="page-wrapper">
+    <div *ngIf="loader" class="loaderCntr" style="display: block;">
+        <div class="loading-screen loading-screen--white"> <span class="preloader--center preloader--lg icon-spin"> <i class="udi udi-circle-loader"></i> </span> </div>
+    </div>
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">Booking Details
+                    <a style="float:right;" class="btn btn-primary" type="button" routerLink="/bookings">Back</a>
+                </h3>
+                <div class="dashboardContent profile clearfix ">
+                    <div class="col-md-4 no-padding">
+                        <div class="dividebor clearfix">
+                            <h4>Booking Id: </h4>
+                            <p>{{bookingDetails.booking_id != '' ? bookingDetails.booking_id : 'N/A' }}</p>
+                        </div>
+                        
+                        <div class="dividebor clearfix">
+                            <h4>Dating Date: </h4>
+                            <p>{{bookingDetails.dating_date | date:'short'}}</p>
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>Status: </h4>
+                            <p>{{bookingDetails.status  != '' ? bookingDetails.status : 'N/A'}}</p>
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>Spot Name: </h4>
+                            <p>{{bookingDetails.spot_name  != '' ? bookingDetails.spot_name : 'N/A'}}</p>
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>Venue: </h4>
+                            <p>{{bookingDetails.venue  != '' ? bookingDetails.venue : 'N/A'}}</p>
+                        </div>
+                        <div class="dividebor clearfix">
+                            <h4>Payment Status: </h4>
+                            <p>{{bookingDetails.payment_status === 0 ? 'Pending' : 'Paid'}}</p>
+                        </div>
+
+                        <div *ngIf="bookingDetails.payment_status" class="dividebor clearfix">
+                            <h4>Paid Amount: </h4>
+                            <p>{{ bookingDetails.amount_paid }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4  column" *ngFor="let user of bookingDetails.users;let i = index;">
+                       <div class="user-box ">
+                          <h3>{{user.full_name}}</h3>
+                           <div class="info-text clearfix">
+                            <h3>Gender: </h3>
+                            <p>{{user.gender == 'm' ? 'Male' : 'Female'}}</p>
+                           </div>
+                            <div class="info-text clearfix">
+                            <h3>Email: </h3>
+                            <p>{{user.email != '' ? user.email : 'N/A'}}</p>
+                           </div>
+                            <div class="info-text clearfix">
+                            <h3>Phone:</h3>
+                            <p>{{user.phone != '' ? user.phone : 'N/A'}}</p>
+                           </div>
+                            <div class="info-text clearfix">
+                            <h3>Age: </h3>
+                            <p>{{user.age != '' ? user.age : 'N/A'}}</p>
+                           </div>
+
+                           <div *ngIf="!bookingDetails.payment_status" class="radio select-player text-center">
+                              <label><input type="radio" name="payer" value="{{i}}" (click)="payerId=user._id">Select as payer</label>
+                            </div>
+                       </div>
+                    </div>
+
+                     <!-- <div class="col-md-4  column" >
+                       <div class="user-box ">
+                         <h3>Alok Deshwal</h3>
+                           <div class="info-text clearfix">
+                            <h3>Name: </h3>
+                            <p>_alok</p>
+                           </div>
+                           <div class="info-text clearfix">
+                            <h3>Joining Fee: </h3>
+                            <p>USD 100</p>
+                           </div>
+                            <div class="info-text clearfix">
+                            <h3>From Date:</h3>
+                            <p>10/23/2017</p>
+                           </div>
+                            <div class="info-text clearfix">
+                            <h3>To Date: </h3>
+                            <p>10/23/2017</p>
+                           </div>
+                            <div class="info-text clearfix">
+                            <h3>Venue: </h3>
+                            <p>noida</p>
+                           </div>
+                            <div class="radio select-player text-center">
+                              <label><input type="radio" name="optradio">Select as payer</label>
+                            </div>
+                       </div>
+                    </div> -->
+                    <div class="col-md-12 no-padding">
+                        <div class="dividebor clearfix">
+                            <h4>Description: </h4>
+                            <p>{{bookingDetails.desc != '' ? bookingDetails.desc : 'N/A'}}</p>
+                        </div>
+                    </div>
+                    <div *ngIf="!bookingDetails.payment_status" class="col-md-12">
+                    <div class="text-right"> <span style="display: inline-block;color: #a94442" [innerHTML]="err"></span></div>
+                     <a style="float:right;" class="btn btn-primary" (click) = "payNow()" >Checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
